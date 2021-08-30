@@ -19,7 +19,6 @@ function loadTodosAPI(): Promise<AxiosResponse<InitialTodosProps>> | undefined {
   try {
     return axios.get(`${BASE_URL}/todo`);
   } catch (err) {
-    // console.warn(err);
     throw new Error('Cannot find loadTodosAPI');
   }
 }
@@ -58,7 +57,7 @@ export function* addTodo(action: AnyAction) {
 export function* removeTodo(action: AnyAction) {
   // const { data } = yield call(loadTodosAPI);
   try {
-    yield delay(2000);
+    yield delay(1000);
     yield put({
       type: REMOVE_TODO_SUCCESS,
       data: action.data,

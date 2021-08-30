@@ -44,8 +44,8 @@ export function modifyTodoRequest(data: ITodo) {
   };
 }
 
-export const showToast = () => {
-  return { type: SHOW_TOAST };
+export const showToast = (data: string) => {
+  return { type: SHOW_TOAST, data };
 };
 
 export const closeToast = () => {

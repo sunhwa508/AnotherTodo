@@ -3,12 +3,14 @@ import styled from 'styled-components';
 import { dateToString } from 'utils/commons';
 import { ITodo } from 'utils/types';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTodoRequest } from 'store/actions/action';
-import { Loader, Toast } from 'components';
+import { addTodoRequest, showToast } from 'store/actions/action';
+import { Loader } from 'components';
+import { IrootType } from 'store/reducers';
 
 const AddTodoForm = () => {
   const dispatch = useDispatch();
-  const { addTodoLoading } = useSelector((state: any) => state.todoReducer);
+  const { addTodoLoading, addTodoDone } = useSelector((state: IrootType) => state.todoReducer);
+
   const getRandomId = () => {
     const array = new Uint32Array(1);
     const randomId = window.crypto.getRandomValues(array);
@@ -23,8 +25,7 @@ const AddTodoForm = () => {
   });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setInputValue({ ...inputValue, content: value });
+    setInputValue({ ...inputValue, content: event.target.value });
   };
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -41,6 +42,7 @@ const AddTodoForm = () => {
   const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
     dispatch(addTodoRequest(inputValue));
+    dispatch(showToast('할일이 등록 되었습니다!'));
     onInputReset();
   };
 

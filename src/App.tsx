@@ -1,18 +1,15 @@
 import './App.css';
 import { useSelector } from 'react-redux';
-import { InitialTodosProps } from 'store/reducers/todoReducer';
-import { InitialToastProps } from 'store/reducers/toastReducer';
+import { IrootType } from 'store/reducers';
 import { AddTodoForm, TodoList, AppLayout, Toast } from 'components';
 
 function App() {
-  const todoReducer = useSelector((state: InitialTodosProps) => state);
-  const { showToast } = useSelector((state: InitialToastProps) => state);
-  // const dispatch = useDispatch();
-
+  const { showToast, desc } = useSelector((state: IrootType) => state.toastReducer);
   return (
     <AppLayout>
       <AddTodoForm />
       <TodoList />
+      <Toast active={showToast} desc={desc} />
     </AppLayout>
   );
 }

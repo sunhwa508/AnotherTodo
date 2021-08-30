@@ -1,11 +1,16 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { ITodo } from 'utils/types';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeTodoRequest } from 'store/actions/action';
 import { Loader } from 'components';
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  min-width: 400px;
+  border: 1px solid black;
+  padding: 10px 20px;
+  margin: 5px;
+`;
 interface Props {
   todo: ITodo;
 }
