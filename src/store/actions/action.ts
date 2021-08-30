@@ -8,13 +8,16 @@ export const ADD_TODO_REQUEST = 'ADD_TODO_REQUEST';
 export const ADD_TODO_SUCCESS = 'ADD_TODO_SUCCESS';
 export const ADD_TODO_FAILURE = 'ADD_TODO_FAILURE';
 
-export const DELETE_TODO_REQUEST = 'DELETE_TODOS_REQUEST';
-export const DELETE_TODO_SUCCESS = 'DELETE_TODOS_SUCCESS';
-export const DELETE_TODO_FAILURE = 'DELETE_TODOS_FAILURE';
+export const REMOVE_TODO_REQUEST = 'REMOVE_TODOS_REQUEST';
+export const REMOVE_TODO_SUCCESS = 'REMOVE_TODOS_SUCCESS';
+export const REMOVE_TODO_FAILURE = 'REMOVE_TODOS_FAILURE';
 
 export const MODIFY_TODO_REQUEST = 'MODIFY_TODOS_REQUEST';
 export const MODIFY_TODO_SUCCESS = 'MODIFY_TODOS_SUCCESS';
 export const MODIFY_TODO_FAILURE = 'MODIFY_TODOS_FAILURE';
+
+export const SHOW_TOAST = 'SHOW_TOAST';
+export const CLOSE_TOAST = 'CLOSE_TOAST';
 
 export function loadTodosRequest() {
   return {
@@ -27,14 +30,24 @@ export const addTodoRequest = (data: ITodo) => ({
   data,
 });
 
-export function deleteTodoRequest() {
+export function removeTodoRequest(data: ITodo) {
   return {
-    type: DELETE_TODO_REQUEST,
+    type: REMOVE_TODO_REQUEST,
+    data,
   };
 }
 
-export function modifyTodoRequest() {
+export function modifyTodoRequest(data: ITodo) {
   return {
     type: MODIFY_TODO_REQUEST,
+    data,
   };
 }
+
+export const showToast = () => {
+  return { type: SHOW_TOAST };
+};
+
+export const closeToast = () => {
+  return { type: CLOSE_TOAST };
+};

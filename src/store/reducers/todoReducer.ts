@@ -11,6 +11,9 @@ export interface InitialTodosProps {
   addTodoLoading: boolean;
   addTodoDone: boolean;
   addTodoError: boolean | null;
+  removeTodoLoading: boolean;
+  removeTodoDone: boolean;
+  removeTodoError: boolean | null;
 }
 
 const initialTodosState: InitialTodosProps = {
@@ -31,11 +34,13 @@ const initialTodosState: InitialTodosProps = {
   addTodoLoading: false,
   addTodoDone: false,
   addTodoError: null,
+  removeTodoLoading: false,
+  removeTodoDone: false,
+  removeTodoError: null,
 };
 
 const todoReducer = (state = initialTodosState, action: AnyAction) => {
   return produce(state, (draft) => {
-    console.log('action data', action.data, action.type);
     switch (action.type) {
       case TYPES.LOAD_TODOS_REQUEST:
         draft.loadTodosLoading = true;
@@ -65,6 +70,20 @@ const todoReducer = (state = initialTodosState, action: AnyAction) => {
       case TYPES.ADD_TODO_FAILURE:
         draft.addTodoLoading = false;
         draft.addTodoError = action.error;
+        break;
+      case TYPES.REMOVE_TODO_REQUEST:
+        draft.removeTodoLoading = true;
+        draft.removeTodoDone = false;
+        draft.removeTodoError = null;
+        break;
+      case TYPES.REMOVE_TODO_SUCCESS:
+        draft.removeTodoLoading = false;
+        draft.removeTodoDone = true;
+        draft.todos.todoList = draft.todos.todoList.filter((v) => v.id !== action.data.id);
+        break;
+      case TYPES.REMOVE_TODO_FAILURE:
+        draft.removeTodoLoading = false;
+        draft.removeTodoError = action.error;
         break;
       default:
         return state;
