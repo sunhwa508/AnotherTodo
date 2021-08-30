@@ -48,7 +48,11 @@
     "no-confusing-arrow": 0,
     "arrow-body-style": 0,
     "import/no-cycle": 0,
-    "react/react-in-jsx-scope": 0
+    "react/react-in-jsx-scope": 0,
+    "operator-linebreak": 0,
+    //배포전지우기
+    "@typescript-eslint/no-unused-vars": 0,
+    "max-len": 0
   },
   "settings": {
     "import/parsers": {

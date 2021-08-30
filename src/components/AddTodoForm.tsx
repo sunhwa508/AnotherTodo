@@ -4,21 +4,27 @@ import { dateToString } from 'utils/commons';
 import { ITodo } from 'utils/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { addTodoRequest } from 'store/actions/action';
-// import { InitialTodosProps } from 'store/reducers/todoReducer';
-import { Loader } from 'components';
+import { Loader, Toast } from 'components';
 
 const AddTodoForm = () => {
   const dispatch = useDispatch();
   const { addTodoLoading } = useSelector((state: any) => state.todoReducer);
+  const getRandomId = () => {
+    const array = new Uint32Array(1);
+    const randomId = window.crypto.getRandomValues(array);
+    return String(randomId[0]);
+  };
+
   const [inputValue, setInputValue] = useState<ITodo>({
-    id: '123',
-    content: '123',
-    isCheck: true,
+    id: getRandomId(),
+    content: '',
+    isCheck: false,
     createdAt: dateToString(new Date()),
   });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue({ ...inputValue, [event.target.name]: event.target.value });
+    const { name, value } = event.target;
+    setInputValue({ ...inputValue, content: value });
   };
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -26,7 +32,7 @@ const AddTodoForm = () => {
     setInputValue({
       id: '',
       content: '',
-      isCheck: true,
+      isCheck: false,
       createdAt: dateToString(new Date()),
     });
     inputRef?.current?.focus();
@@ -43,7 +49,7 @@ const AddTodoForm = () => {
       <Form onSubmit={handleSubmit}>
         <FormInput
           ref={inputRef}
-          type="content"
+          value={inputValue.content}
           name="content"
           placeholder="Add your new todo"
           onChange={(event) => handleChange(event)}

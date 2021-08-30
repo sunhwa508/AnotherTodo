@@ -1,12 +1,12 @@
-import React from 'react';
 import './App.css';
 import { useSelector } from 'react-redux';
-import { AddTodoForm, TodoList, AppLayout } from './components';
-import { InitialTodosProps } from './store/reducers/todoReducer';
+import { InitialTodosProps } from 'store/reducers/todoReducer';
+import { InitialToastProps } from 'store/reducers/toastReducer';
+import { AddTodoForm, TodoList, AppLayout, Toast } from 'components';
 
 function App() {
   const todoReducer = useSelector((state: InitialTodosProps) => state);
-  console.log('data', todoReducer);
+  const { showToast } = useSelector((state: InitialToastProps) => state);
   // const dispatch = useDispatch();
 
   return (
