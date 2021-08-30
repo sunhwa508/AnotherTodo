@@ -37,12 +37,16 @@ const AddTodoForm = () => {
       createdAt: dateToString(new Date()),
     });
     inputRef?.current?.focus();
+    dispatch(showToast({ showToast: true, title: 'SUCCESS', desc: '등록완료되었습니다' }));
   };
 
   const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (inputValue.content.trim().length === 0) {
+      dispatch(showToast({ showToast: true, title: '👀', desc: '할일을 입력해주세요' }));
+      return;
+    }
     dispatch(addTodoRequest(inputValue));
-    dispatch(showToast('할일이 등록 되었습니다!'));
     onInputReset();
   };
 

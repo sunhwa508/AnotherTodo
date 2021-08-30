@@ -54,7 +54,8 @@
     "@typescript-eslint/no-unused-vars": 0,
     "import/no-duplicates": 0,
     "import/order": 0,
-    "import/no-self-import": 0
+    "import/no-self-import": 0,
+    "jsx-a11y/label-has-associated-control": 0
   },
   "settings": {
     "import/parsers": {

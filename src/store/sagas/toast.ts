@@ -1,4 +1,4 @@
-import { fork, all, delay, put, takeLatest } from 'redux-saga/effects';
+import { fork, all, delay, put, takeLeading } from 'redux-saga/effects';
 import { SHOW_TOAST, CLOSE_TOAST } from 'store/actions/action';
 
 export function* showToast() {
@@ -8,8 +8,9 @@ export function* showToast() {
   });
 }
 
+// 반복클릭방지
 function* watchToast() {
-  yield takeLatest(SHOW_TOAST, showToast);
+  yield takeLeading(SHOW_TOAST, showToast);
 }
 
 export default function* toastSaga() {

@@ -4,12 +4,12 @@ import { IrootType } from 'store/reducers';
 import { AddTodoForm, TodoList, AppLayout, Toast } from 'components';
 
 function App() {
-  const { showToast, desc } = useSelector((state: IrootType) => state.toastReducer);
+  const { showToast, desc, title } = useSelector((state: IrootType) => state.toastReducer);
   return (
     <AppLayout>
       <AddTodoForm />
       <TodoList />
-      <Toast active={showToast} desc={desc} />
+      <Toast active={showToast} title={title} desc={desc} />
     </AppLayout>
   );
 }

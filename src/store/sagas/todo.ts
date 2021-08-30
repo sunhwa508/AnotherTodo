@@ -26,7 +26,7 @@ function loadTodosAPI(): Promise<AxiosResponse<InitialTodosProps>> | undefined {
 export function* loadTodos(action: AnyAction) {
   const { data } = yield call(loadTodosAPI);
   try {
-    yield delay(2000);
+    yield delay(1000);
     yield put({
       type: LOAD_TODOS_SUCCESS,
       data: action.data,
@@ -41,7 +41,7 @@ export function* loadTodos(action: AnyAction) {
 export function* addTodo(action: AnyAction) {
   // const { data } = yield call(loadTodosAPI);
   try {
-    yield delay(2000);
+    yield delay(1000);
     yield put({
       type: ADD_TODO_SUCCESS,
       data: action.data,

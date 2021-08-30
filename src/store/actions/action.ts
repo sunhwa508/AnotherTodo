@@ -1,4 +1,5 @@
 import { ITodo } from 'utils/types';
+import { InitialToastProps } from 'store/reducers/toastReducer';
 
 export const LOAD_TODOS_REQUEST = 'LOAD_TODOS_REQUEST';
 export const LOAD_TODOS_SUCCESS = 'LOAD_TODOS_SUCCESS';
@@ -44,7 +45,7 @@ export function modifyTodoRequest(data: ITodo) {
   };
 }
 
-export const showToast = (data: string) => {
+export const showToast = (data: InitialToastProps) => {
   return { type: SHOW_TOAST, data };
 };
 

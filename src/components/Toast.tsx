@@ -32,7 +32,7 @@ const Wrapper = styled.div`
   height: 60px;
   /*margin-left: -125px;*/
   margin: auto;
-  background-color: #f8a4a4;
+  background-color: #626262;
   font-weight: bold;
   color: #fff;
   text-align: center;
@@ -60,11 +60,12 @@ const Wrapper = styled.div`
 interface Props {
   active: boolean;
   desc: string;
+  title: string;
 }
-function Toast({ active, desc }: Props) {
+function Toast({ active, desc, title }: Props) {
   return (
     <Wrapper className={`${active ? 'show' : ''}`}>
-      등록완료!
+      {title}
       <div>{desc}</div>
     </Wrapper>
   );
