@@ -1,4 +1,12 @@
-import { loadTodosRequest, addTodoRequest, removeTodoRequest, editTodoRequest, showToast, closeToast } from './action';
+import {
+  loadTodosRequest,
+  addTodoRequest,
+  removeTodoRequest,
+  editTodoRequest,
+  sortByDeadlineRequest,
+  showToast,
+  closeToast,
+} from './action';
 
 // 모든 액션 관리
 const rootAction = {
@@ -6,6 +14,7 @@ const rootAction = {
   addTodoRequest,
   removeTodoRequest,
   editTodoRequest,
+  sortByDeadlineRequest,
   showToast,
   closeToast,
 };

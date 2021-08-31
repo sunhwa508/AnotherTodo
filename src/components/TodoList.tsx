@@ -1,9 +1,11 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { ITodo } from 'utils/types';
 import { TodoItem } from 'components';
 import styled from 'styled-components';
 import { Loader } from 'components';
+import { FiFilter } from 'react-icons/fi';
+import { sortByDeadlineRequest } from 'store/actions/action';
 
 interface IstyleProps {
   done: boolean;
@@ -32,13 +34,23 @@ const Wrapper = styled.table`
     background-color: #ddd;
   }
 `;
-const Title = styled.tr`
-  background-color: #f1cfcf;
+const StyledTh = styled.th`
+  position: relative;
+  & button {
+    position: absolute;
+    right: 5px;
+  }
 `;
 function TodoList() {
+  const [sortType, setSortType] = useState(true);
   const { todos } = useSelector((state: any) => state.todoReducer);
   const { removeTodoLoading } = useSelector((state: any) => state.todoReducer);
+  const dispatch = useDispatch();
 
+  const onClickFilter = () => {
+    setSortType((prev) => !prev);
+    dispatch(sortByDeadlineRequest(sortType));
+  };
   return (
     <>
       <Wrapper>
@@ -46,14 +58,23 @@ function TodoList() {
           <tr className="table_header">
             <th>Description</th>
             <th>상태</th>
-            <th>마감일</th>
+            <StyledTh>
+              마감일
+              <button type="button" onClick={onClickFilter}>
+                <FiFilter size={15} />
+              </button>
+            </StyledTh>
             <th>삭제</th>
             <th>생성일</th>
           </tr>
         </thead>
         <tbody>
           {todos.todoList.map((todo: ITodo, index: number) => (
-            <StyledTr key={todo.id} done={todo.status === 'DONE'} className={index % 2 !== 0 ? 'odd_color' : ''}>
+            <StyledTr
+              key={todo.id}
+              done={todo.status === '다한 것'}
+              className={index % 2 !== 0 ? 'odd_color' : ''}
+            >
               <TodoItem todo={todo} />
             </StyledTr>
           ))}

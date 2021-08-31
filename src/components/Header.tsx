@@ -8,10 +8,11 @@ const Wrapper = styled.div`
   height: 50px;
   display: fixed;
   width: 100vw;
-  font-size: 2rem; ;
+  font-size: 2rem;
+  margin-bottom: 20px;
 `;
 const Header = () => {
-  return <Wrapper>HEADER</Wrapper>;
+  return <Wrapper>할일기록장</Wrapper>;
 };
 
 export { Header };

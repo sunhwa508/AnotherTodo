@@ -14,6 +14,6 @@ export interface ITodo {
   content: string;
   isCheck: boolean;
   createdAt: string;
-  deadLine: string;
+  deadLine: string | Date;
   status: string;
 }

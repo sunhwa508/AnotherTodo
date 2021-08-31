@@ -14,6 +14,8 @@ import {
   EDIT_TODO_REQUEST,
   EDIT_TODO_SUCCESS,
   EDIT_TODO_FAILURE,
+  SORT_BY_DEADLINE_REQUEST,
+  SORT_BY_DEADLINE_SUCCESS,
 } from 'store/actions/action';
 import { BASE_URL } from 'utils/constants';
 import { InitialTodosProps } from 'store/reducers/todoReducer';
@@ -88,6 +90,18 @@ export function* editTodo(action: AnyAction) {
   }
 }
 
+export function* sortByDeadline(action: AnyAction) {
+  // const { data } = yield call(loadTodosAPI);
+  try {
+    yield put({
+      type: SORT_BY_DEADLINE_SUCCESS,
+      data: action.data,
+    });
+  } catch (error) {
+    throw new Error('sorting ERROR');
+  }
+}
+
 function* watchLoadTodos() {
   yield takeLatest(LOAD_TODOS_REQUEST, loadTodos);
 }
@@ -103,7 +117,16 @@ function* watchRemoveTodo() {
 function* watchEditTodo() {
   yield takeLatest(EDIT_TODO_REQUEST, editTodo);
 }
+function* watchSortByDeadline() {
+  yield takeLatest(SORT_BY_DEADLINE_REQUEST, sortByDeadline);
+}
 
 export default function* todosSaga() {
-  yield all([fork(watchLoadTodos), fork(watchAddTodo), fork(watchRemoveTodo), fork(watchEditTodo)]);
+  yield all([
+    fork(watchLoadTodos),
+    fork(watchAddTodo),
+    fork(watchRemoveTodo),
+    fork(watchEditTodo),
+    fork(watchSortByDeadline),
+  ]);
 }

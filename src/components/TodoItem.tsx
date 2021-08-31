@@ -6,6 +6,8 @@ import { editTodoRequest, removeTodoRequest, showToast } from 'store/actions/act
 import { Status } from 'utils/types';
 import { BiEditAlt, BiSave } from 'react-icons/bi';
 import { RiDeleteBinLine } from 'react-icons/ri';
+import { STATUS_NAME } from 'utils/constants';
+import { dateToString } from 'utils/commons';
 
 interface IstyleProps {
   done: boolean;
@@ -37,7 +39,6 @@ interface Props {
 }
 const TodoItem = ({ todo }: Props) => {
   const dispatch = useDispatch();
-  const [editText, setEditText] = useState(todo);
   const [editMode, setEditMode] = useState(false);
   const [inputValue, setInputValue] = useState<ITodo>({
     id: todo.id,
@@ -52,11 +53,6 @@ const TodoItem = ({ todo }: Props) => {
     dispatch(removeTodoRequest(data));
     dispatch(showToast({ showToast: true, title: '🔥', desc: '삭제가 완료 되었습니다' }));
   };
-  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, checked } = event.target;
-    setInputValue({ ...inputValue, [name]: checked });
-  };
-
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     setInputValue({ ...inputValue, [event.target.name]: event.target.value });
     dispatch(editTodoRequest({ ...inputValue, [event.target.name]: event.target.value }));
@@ -68,11 +64,15 @@ const TodoItem = ({ todo }: Props) => {
     }
     setEditMode((prev) => !prev);
   };
-
+  const listOfStatus = [
+    STATUS_NAME[Status.TODO],
+    STATUS_NAME[Status.IN_PROGRESS],
+    STATUS_NAME[Status.DONE],
+  ];
   return (
     <>
       {editMode ? (
-        <StyledTd done={todo.status === 'DONE'}>
+        <StyledTd done={todo.status === '다한 것'}>
           <input
             value={todo.content}
             name="content"
@@ -84,7 +84,7 @@ const TodoItem = ({ todo }: Props) => {
           </button>
         </StyledTd>
       ) : (
-        <StyledTd done={todo.status === 'DONE'}>
+        <StyledTd done={todo.status === '다한 것'}>
           <div>{todo.content}</div>
           {!(todo.status === 'DONE') && (
             <button type="button" onClick={onClickEdit}>
@@ -94,8 +94,13 @@ const TodoItem = ({ todo }: Props) => {
         </StyledTd>
       )}
       <td>
-        <select value={inputValue.status} id="status" name="status" onChange={(e) => handleChange(e)}>
-          {[Status.TODO, Status.IN_PROGRESS, Status.DONE].map((status: string, index: number) => {
+        <select
+          value={inputValue.status}
+          id="status"
+          name="status"
+          onChange={(e) => handleChange(e)}
+        >
+          {listOfStatus.map((status: string, index: number) => {
             return (
               <option key={status} defaultValue={inputValue.status} value={status}>
                 {status}
@@ -104,20 +109,7 @@ const TodoItem = ({ todo }: Props) => {
           })}
         </select>
       </td>
-      <td>{todo.deadLine}</td>
-      {/* <td className="td_center">
-        <input
-          onChange={(e) => {
-            onChange(e);
-          }}
-          key={todo.id}
-          id={todo.id}
-          type="checkbox"
-          name="isCheck"
-          checked={inputValue.isCheck}
-        />
-        <label htmlFor={todo.id}>{}</label>
-      </td> */}
+      <td>{dateToString(todo.deadLine)}</td>
       <td>
         <button onClick={() => removeTodo(todo)} type="button">
           <RiDeleteBinLine size={20} />

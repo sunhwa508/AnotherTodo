@@ -8,9 +8,11 @@ interface Props {
 
 const Layout = styled.div`
   display: flex;
-  justify-content: center;
+
   align-items: center;
+  min-height: 100vh;
   flex-direction: column;
+  background-color: #c5c2c21a;
 `;
 
 const AppLayout = ({ children }: Props) => (

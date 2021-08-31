@@ -2,7 +2,6 @@ import produce from 'immer';
 import { AnyAction } from 'redux';
 import * as TYPES from '../actions/action';
 import { ITodoList, Status } from '../../utils/types';
-import { timelineEnd } from 'console';
 
 export interface InitialTodosProps {
   todos: ITodoList;
@@ -18,6 +17,8 @@ export interface InitialTodosProps {
   editTodoLoading: boolean;
   editTodoDone: boolean;
   editTodoError: boolean | null;
+  sortByDeadlineLoading: boolean;
+  sortByDeadlineDone: boolean;
 }
 
 const initialTodosState: InitialTodosProps = {
@@ -29,7 +30,7 @@ const initialTodosState: InitialTodosProps = {
         content: '할일',
         isCheck: true,
         createdAt: '8월 31일 (화)',
-        deadLine: '8월 31일 (화)',
+        deadLine: new Date(),
         status: Status.TODO,
       },
       {
@@ -37,7 +38,7 @@ const initialTodosState: InitialTodosProps = {
         content: '할일',
         isCheck: true,
         createdAt: '8월 31일 (화)',
-        deadLine: '8월 31일 (화)',
+        deadLine: new Date(),
         status: Status.TODO,
       },
     ],
@@ -54,6 +55,8 @@ const initialTodosState: InitialTodosProps = {
   editTodoLoading: false,
   editTodoDone: false,
   editTodoError: null,
+  sortByDeadlineLoading: false,
+  sortByDeadlineDone: false,
 };
 
 const todoReducer = (state = initialTodosState, action: AnyAction) => {
@@ -116,6 +119,19 @@ const todoReducer = (state = initialTodosState, action: AnyAction) => {
       case TYPES.EDIT_TODO_FAILURE:
         draft.editTodoLoading = false;
         draft.editTodoError = action.error;
+        break;
+      case TYPES.SORT_BY_DEADLINE_REQUEST:
+        draft.sortByDeadlineLoading = true;
+        draft.sortByDeadlineDone = false;
+        break;
+      case TYPES.SORT_BY_DEADLINE_SUCCESS:
+        draft.sortByDeadlineLoading = false;
+        draft.sortByDeadlineDone = true;
+        draft.todos.todoList.sort((a, b) => {
+          return action.data
+            ? new Date(a.deadLine).getTime() - new Date(b.deadLine).getTime()
+            : new Date(b.deadLine).getTime() - new Date(a.deadLine).getTime();
+        });
         break;
       default:
         return state;

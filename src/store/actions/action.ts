@@ -17,6 +17,9 @@ export const EDIT_TODO_REQUEST = 'EDIT_TODOS_REQUEST';
 export const EDIT_TODO_SUCCESS = 'EDIT_TODOS_SUCCESS';
 export const EDIT_TODO_FAILURE = 'EDIT_TODOS_FAILURE';
 
+export const SORT_BY_DEADLINE_REQUEST = 'SORT_BY_DEADLINE_REQUEST';
+export const SORT_BY_DEADLINE_SUCCESS = 'SORT_BY_DEADLINE_SUCCESS';
+
 export const SHOW_TOAST = 'SHOW_TOAST';
 export const CLOSE_TOAST = 'CLOSE_TOAST';
 
@@ -44,7 +47,12 @@ export function editTodoRequest(data: ITodo) {
     data,
   };
 }
-
+export function sortByDeadlineRequest(data: boolean) {
+  return {
+    type: SORT_BY_DEADLINE_REQUEST,
+    data,
+  };
+}
 export const showToast = (data: InitialToastProps) => {
   return { type: SHOW_TOAST, data };
 };

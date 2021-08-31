@@ -26,7 +26,7 @@ const AddTodoForm = () => {
     content: '',
     isCheck: false,
     createdAt: dateToString(new Date()),
-    deadLine: dateToString(new Date()),
+    deadLine: new Date(),
     status: Status.TODO,
   });
 
@@ -37,11 +37,11 @@ const AddTodoForm = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const onInputReset = () => {
     setInputValue({
-      id: '',
+      id: getRandomId(),
       content: '',
       isCheck: false,
       createdAt: dateToString(new Date()),
-      deadLine: dateToString(new Date()),
+      deadLine: new Date(),
       status: Status.TODO,
     });
     inputRef?.current?.focus();
@@ -61,7 +61,7 @@ const AddTodoForm = () => {
 
   const getConvertedDate = (date: Date) => {
     setSelectedDate(date);
-    setInputValue({ ...inputValue, deadLine: dateToString(date) });
+    setInputValue({ ...inputValue, deadLine: date });
   };
 
   return (
@@ -71,7 +71,7 @@ const AddTodoForm = () => {
           ref={inputRef}
           value={inputValue.content}
           name="content"
-          placeholder="Add your new todo"
+          placeholder="할일을 적으시오"
           onChange={(event) => handleChange(event)}
         />
         <DatePicker
@@ -106,13 +106,15 @@ const Form = styled.form`
   align-items: center;
   & .react-datepicker-wrapper,
   .react-datepicker__input-container input {
-    border: 0;
-    width: 10rem;
+    background-color: #dfdfdf69;
+    width: 150px;
     font-size: 1.1rem;
     margin-right: 1rem;
+    padding: 0 0.5rem;
   }
   & input {
     width: 20rem;
+    border: 1px solid gray;
     &:last-child {
       padding: 10px 0;
       border: 0;
