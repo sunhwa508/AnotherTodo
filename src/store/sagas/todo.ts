@@ -21,6 +21,7 @@ import {
 } from 'store/actions/action';
 import { BASE_URL } from 'utils/constants';
 import { InitialTodosProps } from 'store/reducers/todoReducer';
+import { ITodo } from 'utils/types';
 
 function loadTodosAPI(): Promise<AxiosResponse<InitialTodosProps>> | undefined {
   try {
@@ -44,8 +45,13 @@ export function* loadTodos() {
   }
 }
 
+function addTodoAPI(data: ITodo) {
+  return data;
+  // return axios.post(`${BASE_URL}/todo/${data.id}`, data);
+}
+
 export function* addTodo(action: AnyAction) {
-  // const { data } = yield call(loadTodosAPI);
+  const { data } = yield call(addTodoAPI, action.data);
   try {
     yield delay(1000);
     yield put({
@@ -118,15 +124,12 @@ export function* sortByCreatedAt(action: AnyAction) {
 function* watchLoadTodos() {
   yield takeLatest(LOAD_TODOS_REQUEST, loadTodos);
 }
-
 function* watchAddTodo() {
   yield takeLatest(ADD_TODO_REQUEST, addTodo);
 }
-
 function* watchRemoveTodo() {
   yield takeLatest(REMOVE_TODO_REQUEST, removeTodo);
 }
-
 function* watchEditTodo() {
   yield takeLatest(EDIT_TODO_REQUEST, editTodo);
 }
@@ -136,6 +139,7 @@ function* watchSortByDeadline() {
 function* watchSortByCreatedAt() {
   yield takeLatest(SORT_BY_CREATEDAT_REQUEST, sortByCreatedAt);
 }
+
 export default function* todosSaga() {
   yield all([
     fork(watchLoadTodos),

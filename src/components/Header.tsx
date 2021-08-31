@@ -1,5 +1,8 @@
-import React from 'react';
 import styled from 'styled-components';
+
+const Header = () => {
+  return <Wrapper>할일기록장</Wrapper>;
+};
 
 const Wrapper = styled.div`
   display: flex;
@@ -11,8 +14,4 @@ const Wrapper = styled.div`
   font-size: 2rem;
   margin-bottom: 20px;
 `;
-const Header = () => {
-  return <Wrapper>할일기록장</Wrapper>;
-};
-
 export { Header };

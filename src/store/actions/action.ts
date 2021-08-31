@@ -1,5 +1,6 @@
 import { ITodo } from 'utils/types';
 import { InitialToastProps } from 'store/reducers/toastReducer';
+import { InitialModalProps } from 'store/reducers/modalReducer';
 
 export const LOAD_TODOS_REQUEST = 'LOAD_TODOS_REQUEST';
 export const LOAD_TODOS_SUCCESS = 'LOAD_TODOS_SUCCESS';
@@ -20,11 +21,14 @@ export const EDIT_TODO_FAILURE = 'EDIT_TODOS_FAILURE';
 export const SORT_BY_DEADLINE_REQUEST = 'SORT_BY_DEADLINE_REQUEST';
 export const SORT_BY_DEADLINE_SUCCESS = 'SORT_BY_DEADLINE_SUCCESS';
 
-export const SORT_BY_CREATEDAT_REQUEST = 'SORT_BY_DEADLINE_REQUEST';
-export const SORT_BY_CREATEDAT_SUCCESS = 'SORT_BY_DEADLINE_SUCCESS';
+export const SORT_BY_CREATEDAT_REQUEST = 'SORT_BY_CREATEDAT_REQUEST';
+export const SORT_BY_CREATEDAT_SUCCESS = 'SORT_BY_CREATEDAT_SUCCESS';
 
 export const SHOW_TOAST = 'SHOW_TOAST';
 export const CLOSE_TOAST = 'CLOSE_TOAST';
+
+export const SHOW_MODAL = 'SHOW_MODAL';
+export const CLOSE_MODAL = 'CLOSE_MODAL';
 
 export function loadTodosRequest() {
   return {
@@ -50,22 +54,33 @@ export function editTodoRequest(data: ITodo) {
     data,
   };
 }
+
 export function sortByDeadlineRequest(data: boolean) {
   return {
     type: SORT_BY_DEADLINE_REQUEST,
     data,
   };
 }
+
 export function sortByCreatedAtRequest(data: boolean) {
   return {
     type: SORT_BY_CREATEDAT_REQUEST,
     data,
   };
 }
+
 export const showToast = (data: InitialToastProps) => {
   return { type: SHOW_TOAST, data };
 };
 
 export const closeToast = () => {
   return { type: CLOSE_TOAST };
+};
+
+export const showModal = (data: ITodo) => {
+  return { type: SHOW_MODAL, data };
+};
+
+export const closeModal = () => {
+  return { type: CLOSE_MODAL };
 };

@@ -1,3 +1,5 @@
+import { Status } from './types';
+
 export const BASE_URL = 'http://dummy-server.io';
 
 export const STATUS_NAME = {
@@ -5,3 +7,9 @@ export const STATUS_NAME = {
   IN_PROGRESS: '진행중인것',
   DONE: '다한 것',
 };
+
+export const listOfStatus = [
+  STATUS_NAME[Status.TODO],
+  STATUS_NAME[Status.IN_PROGRESS],
+  STATUS_NAME[Status.DONE],
+];

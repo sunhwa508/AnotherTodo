@@ -4,6 +4,7 @@ import {
   removeTodoRequest,
   editTodoRequest,
   sortByDeadlineRequest,
+  sortByCreatedAtRequest,
   showToast,
   closeToast,
 } from './action';
@@ -15,6 +16,7 @@ const rootAction = {
   removeTodoRequest,
   editTodoRequest,
   sortByDeadlineRequest,
+  sortByCreatedAtRequest,
   showToast,
   closeToast,
 };

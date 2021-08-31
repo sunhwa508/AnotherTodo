@@ -1,6 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
-import { dateToString } from 'utils/commons';
 import { ITodo } from 'utils/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { addTodoRequest, showToast } from 'store/actions/action';
@@ -15,13 +14,14 @@ const AddTodoForm = () => {
   const dispatch = useDispatch();
   const { addTodoLoading } = useSelector((state: IrootType) => state.todoReducer);
   const { todos } = useSelector((state: any) => state.todoReducer);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const getRandomId = () => {
     const array = new Uint32Array(1);
     const randomId = window.crypto.getRandomValues(array);
     return String(randomId[0]);
   };
-  const [selectedDate, setSelectedDate] = useState(new Date());
+
   const [inputValue, setInputValue] = useState<ITodo>({
     id: getRandomId(),
     content: '',
@@ -32,10 +32,9 @@ const AddTodoForm = () => {
   });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue({ ...inputValue, content: event.target.value });
+    setInputValue({ ...inputValue, [event.target.name]: event.target.value });
   };
 
-  const inputRef = useRef<HTMLInputElement>(null);
   const onInputReset = () => {
     setInputValue({
       id: getRandomId(),
@@ -46,19 +45,13 @@ const AddTodoForm = () => {
       status: Status.TODO,
     });
     inputRef?.current?.focus();
-    setSelectedDate(new Date());
-    dispatch(showToast({ showToast: true, title: 'SUCCESS', desc: '등록완료되었습니다' }));
-  };
-
-  const getConvertedDate = (date: Date) => {
-    setSelectedDate(date);
-    setInputValue({ ...inputValue, deadLine: date });
+    dispatch(showToast({ showToast: true, title: '성공', desc: '등록 완료 되었습니다' }));
   };
 
   const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (inputValue.content.trim().length === 0) {
-      dispatch(showToast({ showToast: true, title: '👀', desc: '할일을 입력해주세요' }));
+      dispatch(showToast({ showToast: true, title: '등록실패', desc: '할일을 입력해주세요' }));
       return;
     }
     dispatch(addTodoRequest(inputValue));
@@ -81,8 +74,8 @@ const AddTodoForm = () => {
           minDate={new Date()}
           closeOnScroll
           placeholderText="마감 날짜 선택"
-          selected={selectedDate}
-          onChange={(date: Date) => getConvertedDate(date)}
+          selected={inputValue.deadLine}
+          onChange={(date: Date) => setInputValue({ ...inputValue, deadLine: date })}
         />
         <button type="submit">
           <IoAddCircleSharp size={30} />

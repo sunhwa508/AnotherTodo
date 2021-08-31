@@ -1,42 +1,23 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useState, useEffect } from 'react';
 import { ITodo } from 'utils/types';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { editTodoRequest, removeTodoRequest, showToast } from 'store/actions/action';
-import { Status } from 'utils/types';
+import { editTodoRequest, removeTodoRequest, showToast, showModal } from 'store/actions/action';
 import { BiEditAlt, BiSave } from 'react-icons/bi';
 import { RiDeleteBinLine } from 'react-icons/ri';
-import { STATUS_NAME } from 'utils/constants';
+import { listOfStatus } from 'utils/constants';
 import { dateToString } from 'utils/commons';
 
 interface IstyleProps {
   done: boolean;
 }
 
-const StyledTd = styled.td`
-  text-decoration: ${(props: IstyleProps) => (props.done ? 'line-through' : 'none')};
-  position: relative;
-
-  & div {
-    width: 200px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    margin-right: 50px;
-  }
-  & input {
-    min-width: 200px;
-  }
-  & button {
-    position: absolute;
-    right: 10px;
-    top: 12px;
-    margin: 0 5px;
-  }
-`;
 interface Props {
   todo: ITodo;
 }
+
 const TodoItem = ({ todo }: Props) => {
   const { todos } = useSelector((state: any) => state.todoReducer);
   const dispatch = useDispatch();
@@ -52,11 +33,8 @@ const TodoItem = ({ todo }: Props) => {
 
   const removeTodo = (data: ITodo) => {
     dispatch(removeTodoRequest(data));
-    dispatch(showToast({ showToast: true, title: '🔥', desc: '삭제가 완료 되었습니다' }));
+    dispatch(showToast({ showToast: true, title: '🔥', desc: '삭제 되었습니다' }));
   };
-  useEffect(() => {
-    localStorage.setItem('todos', JSON.stringify(todos.todoList));
-  }, [todos.todoList]);
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     setInputValue({ ...inputValue, [event.target.name]: event.target.value });
@@ -69,11 +47,11 @@ const TodoItem = ({ todo }: Props) => {
     }
     setEditMode((prev) => !prev);
   };
-  const listOfStatus = [
-    STATUS_NAME[Status.TODO],
-    STATUS_NAME[Status.IN_PROGRESS],
-    STATUS_NAME[Status.DONE],
-  ];
+
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(todos.todoList));
+  }, [todos.todoList]);
+
   return (
     <>
       {editMode ? (
@@ -90,8 +68,8 @@ const TodoItem = ({ todo }: Props) => {
         </StyledTd>
       ) : (
         <StyledTd done={todo.status === '다한 것'}>
-          <div>{todo.content}</div>
-          {!(todo.status === 'DONE') && (
+          <div onClick={() => dispatch(showModal(todo))}>{todo.content}</div>
+          {!(todo.status === '다한 것') && (
             <button type="button" onClick={onClickEdit}>
               <BiEditAlt size={20} />
             </button>
@@ -126,3 +104,25 @@ const TodoItem = ({ todo }: Props) => {
 };
 
 export { TodoItem };
+
+const StyledTd = styled.td`
+  text-decoration: ${(props: IstyleProps) => (props.done ? 'line-through' : 'none')};
+  position: relative;
+
+  & div {
+    width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-right: 50px;
+  }
+  & input {
+    min-width: 200px;
+  }
+  & button {
+    position: absolute;
+    right: 10px;
+    top: 12px;
+    margin: 0 5px;
+  }
+`;

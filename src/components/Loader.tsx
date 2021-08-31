@@ -1,6 +1,25 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
+function Loader() {
+  return (
+    <LoadingBar>
+      <div />
+      <div />
+      <div />
+      <div />
+      <div />
+      <div />
+      <div />
+      <div />
+      <div />
+      <div />
+      <div />
+      <div />
+    </LoadingBar>
+  );
+}
+
 const spinner = keyframes`
   0% {
     opacity: 1;
@@ -82,24 +101,5 @@ const LoadingBar = styled.div`
     }
   }
 `;
-
-function Loader() {
-  return (
-    <LoadingBar>
-      <div />
-      <div />
-      <div />
-      <div />
-      <div />
-      <div />
-      <div />
-      <div />
-      <div />
-      <div />
-      <div />
-      <div />
-    </LoadingBar>
-  );
-}
 
 export { Loader };
