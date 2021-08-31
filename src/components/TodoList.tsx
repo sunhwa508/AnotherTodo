@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { ITodo } from 'utils/types';
-import { TodoItem } from 'components';
-import styled from 'styled-components';
-import { Loader } from 'components';
 import { FiFilter } from 'react-icons/fi';
+
+import { ITodo } from 'utils/types';
+import { STATUS_NAME } from 'utils/constants';
+import { TodoItem, Loader } from 'components';
+import styled from 'styled-components';
 import { sortByDeadlineRequest, sortByCreatedAtRequest } from 'store/actions/action';
 import { IrootType } from 'store/reducers';
 
@@ -52,7 +53,7 @@ function TodoList() {
           {todos.todoList.map((todo: ITodo, index: number) => (
             <StyledTr
               key={todo.id}
-              done={todo.status === '다한 것'}
+              done={todo.status === STATUS_NAME.DONE}
               className={index % 2 !== 0 ? 'odd_color' : ''}
             >
               <TodoItem todo={todo} />

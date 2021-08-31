@@ -1,10 +1,9 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
 import { closeModal } from 'store/actions/action';
 import { ITodo } from 'utils/types';
-import styled from 'styled-components';
 import { dateToString } from 'utils/commons';
-import { STATUS_NAME } from 'utils/constants';
 
 const ModalOverlay = styled.div`
   position: absolute;

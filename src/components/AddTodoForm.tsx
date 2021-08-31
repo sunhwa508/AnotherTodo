@@ -1,14 +1,15 @@
 import React, { useState, useRef } from 'react';
-import styled from 'styled-components';
-import { ITodo } from 'utils/types';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTodoRequest, showToast } from 'store/actions/action';
-import { Loader } from 'components';
-import { IrootType } from 'store/reducers';
+import { IoAddCircleSharp } from 'react-icons/io5';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { Status } from 'utils/types';
-import { IoAddCircleSharp } from 'react-icons/io5';
+import styled from 'styled-components';
+
+import { ITodo, Status } from 'utils/types';
+import { STATUS_NAME } from 'utils/constants';
+import { addTodoRequest, showToast } from 'store/actions/action';
+import { IrootType } from 'store/reducers';
+import { Loader } from 'components';
 
 const AddTodoForm = () => {
   const dispatch = useDispatch();
@@ -28,7 +29,7 @@ const AddTodoForm = () => {
     isCheck: false,
     createdAt: new Date(),
     deadLine: new Date(),
-    status: Status.TODO,
+    status: STATUS_NAME[Status.TODO],
   });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,7 +43,7 @@ const AddTodoForm = () => {
       isCheck: false,
       createdAt: new Date(),
       deadLine: new Date(),
-      status: Status.TODO,
+      status: STATUS_NAME[Status.TODO],
     });
     inputRef?.current?.focus();
     dispatch(showToast({ showToast: true, title: '성공', desc: '등록 완료 되었습니다' }));

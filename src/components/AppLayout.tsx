@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import { Header } from 'components';
 
 interface Props {
@@ -8,7 +9,6 @@ interface Props {
 
 const Layout = styled.div`
   display: flex;
-
   align-items: center;
   min-height: 100vh;
   flex-direction: column;
