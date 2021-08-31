@@ -5,7 +5,7 @@ import { TodoItem } from 'components';
 import styled from 'styled-components';
 import { Loader } from 'components';
 import { FiFilter } from 'react-icons/fi';
-import { sortByDeadlineRequest } from 'store/actions/action';
+import { sortByDeadlineRequest, sortByCreatedAtRequest } from 'store/actions/action';
 
 interface IstyleProps {
   done: boolean;
@@ -51,12 +51,18 @@ function TodoList() {
     setSortType((prev) => !prev);
     dispatch(sortByDeadlineRequest(sortType));
   };
+
+  const onClickCreatedFilter = () => {
+    setSortType((prev) => !prev);
+    dispatch(sortByCreatedAtRequest(sortType));
+  };
+
   return (
     <>
       <Wrapper>
         <thead>
           <tr className="table_header">
-            <th>Description</th>
+            <th>할일목록</th>
             <th>상태</th>
             <StyledTh>
               마감일
@@ -65,7 +71,12 @@ function TodoList() {
               </button>
             </StyledTh>
             <th>삭제</th>
-            <th>생성일</th>
+            <StyledTh>
+              생성일
+              <button type="button" onClick={onClickCreatedFilter}>
+                <FiFilter size={15} />
+              </button>
+            </StyledTh>
           </tr>
         </thead>
         <tbody>

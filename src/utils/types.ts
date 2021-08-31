@@ -13,7 +13,7 @@ export interface ITodo {
   id: string;
   content: string;
   isCheck: boolean;
-  createdAt: string;
+  createdAt: string | Date;
   deadLine: string | Date;
   status: string;
 }

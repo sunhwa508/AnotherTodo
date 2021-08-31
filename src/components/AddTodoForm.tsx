@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { dateToString } from 'utils/commons';
 import { ITodo } from 'utils/types';
@@ -14,6 +14,7 @@ import { IoAddCircleSharp } from 'react-icons/io5';
 const AddTodoForm = () => {
   const dispatch = useDispatch();
   const { addTodoLoading } = useSelector((state: IrootType) => state.todoReducer);
+  const { todos } = useSelector((state: any) => state.todoReducer);
 
   const getRandomId = () => {
     const array = new Uint32Array(1);
@@ -25,7 +26,7 @@ const AddTodoForm = () => {
     id: getRandomId(),
     content: '',
     isCheck: false,
-    createdAt: dateToString(new Date()),
+    createdAt: new Date(),
     deadLine: new Date(),
     status: Status.TODO,
   });
@@ -40,13 +41,18 @@ const AddTodoForm = () => {
       id: getRandomId(),
       content: '',
       isCheck: false,
-      createdAt: dateToString(new Date()),
+      createdAt: new Date(),
       deadLine: new Date(),
       status: Status.TODO,
     });
     inputRef?.current?.focus();
     setSelectedDate(new Date());
     dispatch(showToast({ showToast: true, title: 'SUCCESS', desc: '등록완료되었습니다' }));
+  };
+
+  const getConvertedDate = (date: Date) => {
+    setSelectedDate(date);
+    setInputValue({ ...inputValue, deadLine: date });
   };
 
   const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
@@ -57,11 +63,7 @@ const AddTodoForm = () => {
     }
     dispatch(addTodoRequest(inputValue));
     onInputReset();
-  };
-
-  const getConvertedDate = (date: Date) => {
-    setSelectedDate(date);
-    setInputValue({ ...inputValue, deadLine: date });
+    localStorage.setItem('todos', JSON.stringify([...todos.todoList, inputValue]));
   };
 
   return (
@@ -110,11 +112,13 @@ const Form = styled.form`
     width: 150px;
     font-size: 1.1rem;
     margin-right: 1rem;
+    border-radius: 10px;
     padding: 0 0.5rem;
   }
   & input {
     width: 20rem;
-    border: 1px solid gray;
+    border: 1px dotted gray;
+    border-radius: 10px;
     &:last-child {
       padding: 10px 0;
       border: 0;

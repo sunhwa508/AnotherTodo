@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ITodo } from 'utils/types';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
@@ -38,6 +38,7 @@ interface Props {
   todo: ITodo;
 }
 const TodoItem = ({ todo }: Props) => {
+  const { todos } = useSelector((state: any) => state.todoReducer);
   const dispatch = useDispatch();
   const [editMode, setEditMode] = useState(false);
   const [inputValue, setInputValue] = useState<ITodo>({
@@ -53,6 +54,10 @@ const TodoItem = ({ todo }: Props) => {
     dispatch(removeTodoRequest(data));
     dispatch(showToast({ showToast: true, title: '🔥', desc: '삭제가 완료 되었습니다' }));
   };
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(todos.todoList));
+  }, [todos.todoList]);
+
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     setInputValue({ ...inputValue, [event.target.name]: event.target.value });
     dispatch(editTodoRequest({ ...inputValue, [event.target.name]: event.target.value }));
@@ -115,7 +120,7 @@ const TodoItem = ({ todo }: Props) => {
           <RiDeleteBinLine size={20} />
         </button>
       </td>
-      <td>{todo.createdAt}</td>
+      <td>{dateToString(todo.createdAt)}</td>
     </>
   );
 };

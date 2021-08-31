@@ -1,12 +1,18 @@
+import { useEffect } from 'react';
 import './App.css';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { IrootType } from 'store/reducers';
 import { AddTodoForm, TodoList, AppLayout, Toast } from 'components';
+import { loadTodosRequest } from 'store/actions/action';
 
 function App() {
   const { showToast, desc, title } = useSelector((state: IrootType) => state.toastReducer);
-  const { todos } = useSelector((state: IrootType) => state.todoReducer);
-  console.log(todos);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loadTodosRequest());
+  }, []);
+
   return (
     <AppLayout>
       <AddTodoForm />

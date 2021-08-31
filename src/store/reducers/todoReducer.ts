@@ -19,29 +19,14 @@ export interface InitialTodosProps {
   editTodoError: boolean | null;
   sortByDeadlineLoading: boolean;
   sortByDeadlineDone: boolean;
+  sortByCreatedAtLoading: boolean;
+  sortByCreatedAtDone: boolean;
 }
 
 const initialTodosState: InitialTodosProps = {
   todos: {
     count: 0,
-    todoList: [
-      {
-        id: 'asdasd',
-        content: '할일',
-        isCheck: true,
-        createdAt: '8월 31일 (화)',
-        deadLine: new Date(),
-        status: Status.TODO,
-      },
-      {
-        id: 'asdasdasasd',
-        content: '할일',
-        isCheck: true,
-        createdAt: '8월 31일 (화)',
-        deadLine: new Date(),
-        status: Status.TODO,
-      },
-    ],
+    todoList: [],
   },
   loadTodosLoading: false,
   loadTodosDone: false,
@@ -57,9 +42,12 @@ const initialTodosState: InitialTodosProps = {
   editTodoError: null,
   sortByDeadlineLoading: false,
   sortByDeadlineDone: false,
+  sortByCreatedAtLoading: false,
+  sortByCreatedAtDone: false,
 };
 
 const todoReducer = (state = initialTodosState, action: AnyAction) => {
+  const todos = localStorage.getItem('todos');
   return produce(state, (draft) => {
     switch (action.type) {
       case TYPES.LOAD_TODOS_REQUEST:
@@ -70,7 +58,7 @@ const todoReducer = (state = initialTodosState, action: AnyAction) => {
       case TYPES.LOAD_TODOS_SUCCESS:
         draft.loadTodosLoading = false;
         draft.loadTodosDone = true;
-        draft.todos.todoList = action.data.todoList.concat(draft.todos.todoList);
+        draft.todos.todoList = todos ? JSON.parse(todos) : [];
         break;
       case TYPES.LOAD_TODOS_FAILURE:
         draft.loadTodosLoading = false;
@@ -131,6 +119,19 @@ const todoReducer = (state = initialTodosState, action: AnyAction) => {
           return action.data
             ? new Date(a.deadLine).getTime() - new Date(b.deadLine).getTime()
             : new Date(b.deadLine).getTime() - new Date(a.deadLine).getTime();
+        });
+        break;
+      case TYPES.SORT_BY_CREATEDAT_REQUEST:
+        draft.sortByCreatedAtLoading = true;
+        draft.sortByCreatedAtDone = false;
+        break;
+      case TYPES.SORT_BY_CREATEDAT_SUCCESS:
+        draft.sortByCreatedAtLoading = false;
+        draft.sortByCreatedAtDone = true;
+        draft.todos.todoList.sort((a, b) => {
+          return action.data
+            ? new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+            : new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
         });
         break;
       default:
