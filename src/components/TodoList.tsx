@@ -3,10 +3,19 @@ import { useSelector } from 'react-redux';
 import { ITodo } from 'utils/types';
 import { TodoItem } from 'components';
 import styled from 'styled-components';
+import { Loader } from 'components';
+
+interface IstyleProps {
+  done: boolean;
+}
+
+const StyledTr = styled.tr`
+  opacity: ${(props: IstyleProps) => (props.done ? '0.3' : '')};
+`;
 
 const Wrapper = styled.table`
   border-collapse: collapse;
-  min-width: 500px;
+  min-width: 600px;
   margin-top: 30px;
   & .table_header {
     background-color: #bbb;
@@ -28,24 +37,30 @@ const Title = styled.tr`
 `;
 function TodoList() {
   const { todos } = useSelector((state: any) => state.todoReducer);
-
-  const itemsElements = todos.todoList.map((todo: ITodo, index: number) => (
-    <tr key={todo.id} className={index % 2 !== 0 ? 'odd_color' : ''}>
-      <TodoItem todo={todo} />
-    </tr>
-  ));
+  const { removeTodoLoading } = useSelector((state: any) => state.todoReducer);
 
   return (
-    <Wrapper>
-      <thead>
-        <tr className="table_header">
-          <th>Description</th>
-          <th>Is done</th>
-          <th>Delete</th>
-        </tr>
-      </thead>
-      <tbody>{itemsElements}</tbody>
-    </Wrapper>
+    <>
+      <Wrapper>
+        <thead>
+          <tr className="table_header">
+            <th>Description</th>
+            <th>상태</th>
+            <th>마감일</th>
+            <th>삭제</th>
+            <th>생성일</th>
+          </tr>
+        </thead>
+        <tbody>
+          {todos.todoList.map((todo: ITodo, index: number) => (
+            <StyledTr key={todo.id} done={todo.status === 'DONE'} className={index % 2 !== 0 ? 'odd_color' : ''}>
+              <TodoItem todo={todo} />
+            </StyledTr>
+          ))}
+        </tbody>
+      </Wrapper>
+      {removeTodoLoading && <Loader />}
+    </>
   );
 }
 

@@ -1,9 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import styled, { keyframes, css } from 'styled-components';
-
-type StyledProps = {
-  active: boolean;
-};
+import React from 'react';
+import styled, { keyframes } from 'styled-components';
 
 const fadein = keyframes`
     from {bottom: 0; opacity: 0;}
@@ -30,7 +26,6 @@ const Wrapper = styled.div`
   visibility: hidden;
   max-width: 50px;
   height: 60px;
-  /*margin-left: -125px;*/
   margin: auto;
   background-color: #626262;
   font-weight: bold;
@@ -44,19 +39,18 @@ const Wrapper = styled.div`
   bottom: 30px;
   font-size: 17px;
   white-space: nowrap;
-
-  &.show {
-    visibility: visible;
-    animation: ${fadein} 0.5s, ${expand} 0.5s 0.5s, ${stay} 3s 1s, ${shrink} 0.5s 4s, ${fadeout} 0.5s 4.5s;
-  }
-
   & div {
     color: #fff;
     padding: 16px;
     overflow: hidden;
     white-space: nowrap;
   }
+  &.show {
+    visibility: visible;
+    animation: ${fadein} 0.5s, ${expand} 0.5s 0.5s, ${stay} 3s 1s, ${shrink} 0.5s 4s, ${fadeout} 0.5s 4.5s;
+  }
 `;
+
 interface Props {
   active: boolean;
   desc: string;

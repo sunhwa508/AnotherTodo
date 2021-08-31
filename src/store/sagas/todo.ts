@@ -11,6 +11,9 @@ import {
   REMOVE_TODO_REQUEST,
   REMOVE_TODO_SUCCESS,
   REMOVE_TODO_FAILURE,
+  EDIT_TODO_REQUEST,
+  EDIT_TODO_SUCCESS,
+  EDIT_TODO_FAILURE,
 } from 'store/actions/action';
 import { BASE_URL } from 'utils/constants';
 import { InitialTodosProps } from 'store/reducers/todoReducer';
@@ -70,6 +73,21 @@ export function* removeTodo(action: AnyAction) {
   }
 }
 
+export function* editTodo(action: AnyAction) {
+  // const { data } = yield call(loadTodosAPI);
+  try {
+    yield put({
+      type: EDIT_TODO_SUCCESS,
+      data: action.data,
+    });
+  } catch (error) {
+    yield put({
+      type: EDIT_TODO_FAILURE,
+      data: error,
+    });
+  }
+}
+
 function* watchLoadTodos() {
   yield takeLatest(LOAD_TODOS_REQUEST, loadTodos);
 }
@@ -82,6 +100,10 @@ function* watchRemoveTodo() {
   yield takeLatest(REMOVE_TODO_REQUEST, removeTodo);
 }
 
+function* watchEditTodo() {
+  yield takeLatest(EDIT_TODO_REQUEST, editTodo);
+}
+
 export default function* todosSaga() {
-  yield all([fork(watchLoadTodos), fork(watchAddTodo), fork(watchRemoveTodo)]);
+  yield all([fork(watchLoadTodos), fork(watchAddTodo), fork(watchRemoveTodo), fork(watchEditTodo)]);
 }

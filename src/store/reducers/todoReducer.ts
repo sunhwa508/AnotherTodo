@@ -1,7 +1,8 @@
 import produce from 'immer';
 import { AnyAction } from 'redux';
 import * as TYPES from '../actions/action';
-import { ITodoList } from '../../utils/types';
+import { ITodoList, Status } from '../../utils/types';
+import { timelineEnd } from 'console';
 
 export interface InitialTodosProps {
   todos: ITodoList;
@@ -14,6 +15,9 @@ export interface InitialTodosProps {
   removeTodoLoading: boolean;
   removeTodoDone: boolean;
   removeTodoError: boolean | null;
+  editTodoLoading: boolean;
+  editTodoDone: boolean;
+  editTodoError: boolean | null;
 }
 
 const initialTodosState: InitialTodosProps = {
@@ -24,7 +28,17 @@ const initialTodosState: InitialTodosProps = {
         id: 'asdasd',
         content: '할일',
         isCheck: true,
-        createdAt: '2021-05-26T11:51:05.097Z',
+        createdAt: '8월 31일 (화)',
+        deadLine: '8월 31일 (화)',
+        status: Status.TODO,
+      },
+      {
+        id: 'asdasdasasd',
+        content: '할일',
+        isCheck: true,
+        createdAt: '8월 31일 (화)',
+        deadLine: '8월 31일 (화)',
+        status: Status.TODO,
       },
     ],
   },
@@ -37,6 +51,9 @@ const initialTodosState: InitialTodosProps = {
   removeTodoLoading: false,
   removeTodoDone: false,
   removeTodoError: null,
+  editTodoLoading: false,
+  editTodoDone: false,
+  editTodoError: null,
 };
 
 const todoReducer = (state = initialTodosState, action: AnyAction) => {
@@ -84,6 +101,21 @@ const todoReducer = (state = initialTodosState, action: AnyAction) => {
       case TYPES.REMOVE_TODO_FAILURE:
         draft.removeTodoLoading = false;
         draft.removeTodoError = action.error;
+        break;
+      case TYPES.EDIT_TODO_REQUEST:
+        draft.editTodoLoading = true;
+        draft.editTodoDone = false;
+        draft.editTodoError = null;
+        break;
+      case TYPES.EDIT_TODO_SUCCESS:
+        draft.editTodoLoading = false;
+        draft.editTodoDone = true;
+        draft.todos.todoList.find((v) => v.id === action.data.id)!.status = action.data.status;
+        draft.todos.todoList.find((v) => v.id === action.data.id)!.content = action.data.content;
+        break;
+      case TYPES.EDIT_TODO_FAILURE:
+        draft.editTodoLoading = false;
+        draft.editTodoError = action.error;
         break;
       default:
         return state;

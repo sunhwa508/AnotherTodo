@@ -1,5 +1,6 @@
 import { AnyAction } from 'redux';
-import { SHOW_TOAST, CLOSE_TOAST } from 'store/actions/action';
+import * as TYPES from 'store/actions/action';
+import produce from 'immer';
 
 const INITIAL_STATE = {
   showToast: false,
@@ -14,20 +15,18 @@ export interface InitialToastProps {
 }
 
 export default function toastReducer(state = INITIAL_STATE, action: AnyAction) {
-  switch (action.type) {
-    case SHOW_TOAST:
-      return {
-        ...state,
-        showToast: true,
-        desc: action.data.desc,
-        title: action.data.title,
-      };
-    case CLOSE_TOAST:
-      return {
-        ...state,
-        showToast: false,
-      };
-    default:
-      return state;
-  }
+  return produce(state, (draft) => {
+    switch (action.type) {
+      case TYPES.SHOW_TOAST:
+        draft.showToast = true;
+        draft.desc = action.data.desc;
+        draft.title = action.data.title;
+        break;
+      case TYPES.CLOSE_TOAST:
+        draft.showToast = false;
+        break;
+      default:
+        return state;
+    }
+  });
 }

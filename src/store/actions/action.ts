@@ -13,9 +13,9 @@ export const REMOVE_TODO_REQUEST = 'REMOVE_TODOS_REQUEST';
 export const REMOVE_TODO_SUCCESS = 'REMOVE_TODOS_SUCCESS';
 export const REMOVE_TODO_FAILURE = 'REMOVE_TODOS_FAILURE';
 
-export const MODIFY_TODO_REQUEST = 'MODIFY_TODOS_REQUEST';
-export const MODIFY_TODO_SUCCESS = 'MODIFY_TODOS_SUCCESS';
-export const MODIFY_TODO_FAILURE = 'MODIFY_TODOS_FAILURE';
+export const EDIT_TODO_REQUEST = 'EDIT_TODOS_REQUEST';
+export const EDIT_TODO_SUCCESS = 'EDIT_TODOS_SUCCESS';
+export const EDIT_TODO_FAILURE = 'EDIT_TODOS_FAILURE';
 
 export const SHOW_TOAST = 'SHOW_TOAST';
 export const CLOSE_TOAST = 'CLOSE_TOAST';
@@ -38,9 +38,9 @@ export function removeTodoRequest(data: ITodo) {
   };
 }
 
-export function modifyTodoRequest(data: ITodo) {
+export function editTodoRequest(data: ITodo) {
   return {
-    type: MODIFY_TODO_REQUEST,
+    type: EDIT_TODO_REQUEST,
     data,
   };
 }

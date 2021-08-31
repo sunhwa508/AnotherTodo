@@ -5,6 +5,8 @@ import { AddTodoForm, TodoList, AppLayout, Toast } from 'components';
 
 function App() {
   const { showToast, desc, title } = useSelector((state: IrootType) => state.toastReducer);
+  const { todos } = useSelector((state: IrootType) => state.todoReducer);
+  console.log(todos);
   return (
     <AppLayout>
       <AddTodoForm />

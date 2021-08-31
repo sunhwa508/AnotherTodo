@@ -1,5 +1,5 @@
 export enum Status {
-  NOT_STARTED = 'TODO',
+  TODO = 'TODO',
   IN_PROGRESS = 'IN_PROGRESS',
   DONE = 'DONE',
 }
@@ -14,4 +14,6 @@ export interface ITodo {
   content: string;
   isCheck: boolean;
   createdAt: string;
+  deadLine: string;
+  status: string;
 }

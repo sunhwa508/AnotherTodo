@@ -6,22 +6,28 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addTodoRequest, showToast } from 'store/actions/action';
 import { Loader } from 'components';
 import { IrootType } from 'store/reducers';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { Status } from 'utils/types';
+import { IoAddCircleSharp } from 'react-icons/io5';
 
 const AddTodoForm = () => {
   const dispatch = useDispatch();
-  const { addTodoLoading, addTodoDone } = useSelector((state: IrootType) => state.todoReducer);
+  const { addTodoLoading } = useSelector((state: IrootType) => state.todoReducer);
 
   const getRandomId = () => {
     const array = new Uint32Array(1);
     const randomId = window.crypto.getRandomValues(array);
     return String(randomId[0]);
   };
-
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const [inputValue, setInputValue] = useState<ITodo>({
     id: getRandomId(),
     content: '',
     isCheck: false,
     createdAt: dateToString(new Date()),
+    deadLine: dateToString(new Date()),
+    status: Status.TODO,
   });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,8 +41,11 @@ const AddTodoForm = () => {
       content: '',
       isCheck: false,
       createdAt: dateToString(new Date()),
+      deadLine: dateToString(new Date()),
+      status: Status.TODO,
     });
     inputRef?.current?.focus();
+    setSelectedDate(new Date());
     dispatch(showToast({ showToast: true, title: 'SUCCESS', desc: '등록완료되었습니다' }));
   };
 
@@ -50,6 +59,11 @@ const AddTodoForm = () => {
     onInputReset();
   };
 
+  const getConvertedDate = (date: Date) => {
+    setSelectedDate(date);
+    setInputValue({ ...inputValue, deadLine: dateToString(date) });
+  };
+
   return (
     <>
       <Form onSubmit={handleSubmit}>
@@ -60,7 +74,17 @@ const AddTodoForm = () => {
           placeholder="Add your new todo"
           onChange={(event) => handleChange(event)}
         />
-        <button type="submit">ADD</button>
+        <DatePicker
+          dateFormat="yyyy-MM-dd"
+          minDate={new Date()}
+          closeOnScroll
+          placeholderText="마감 날짜 선택"
+          selected={selectedDate}
+          onChange={(date: Date) => getConvertedDate(date)}
+        />
+        <button type="submit">
+          <IoAddCircleSharp size={30} />
+        </button>
       </Form>
       {addTodoLoading && <Loader />}
     </>
