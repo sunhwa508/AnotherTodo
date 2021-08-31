@@ -1,6 +1,5 @@
 import { ITodo } from 'utils/types';
 import { InitialToastProps } from 'store/reducers/toastReducer';
-import { InitialModalProps } from 'store/reducers/modalReducer';
 
 export const LOAD_TODOS_REQUEST = 'LOAD_TODOS_REQUEST';
 export const LOAD_TODOS_SUCCESS = 'LOAD_TODOS_SUCCESS';

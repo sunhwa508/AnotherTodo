@@ -1,9 +1,38 @@
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
+
 import { closeModal } from 'store/actions/action';
 import { ITodo } from 'utils/types';
 import { dateToString } from 'utils/commons';
+
+interface Props {
+  data: ITodo;
+}
+
+function Modal({ data }: Props) {
+  const dispatch = useDispatch();
+
+  const stopPropagation = useCallback((e) => {
+    e.stopPropagation();
+  }, []);
+
+  return (
+    <ModalOverlay onClick={() => dispatch(closeModal())}>
+      <ModalWrapper onClick={stopPropagation}>
+        <h1>할일 상세</h1>
+        <h3>{data.content}</h3>
+        <h4>{data.status}</h4>
+        <p>{dateToString(data.deadLine)}</p>
+        <button type="button" onClick={() => dispatch(closeModal())}>
+          확인
+        </button>
+      </ModalWrapper>
+    </ModalOverlay>
+  );
+}
+
+export { Modal };
 
 const ModalOverlay = styled.div`
   position: absolute;
@@ -38,30 +67,3 @@ const ModalWrapper = styled.div`
     margin: 20px 0;
   }
 `;
-interface Props {
-  data: ITodo;
-}
-
-function Modal({ data }: Props) {
-  const dispatch = useDispatch();
-
-  const stopPropagation = useCallback((e) => {
-    e.stopPropagation();
-  }, []);
-
-  return (
-    <ModalOverlay onClick={() => dispatch(closeModal())}>
-      <ModalWrapper onClick={stopPropagation}>
-        <h1>할일 상세</h1>
-        <h3>{data.content}</h3>
-        <h4>{data.status}</h4>
-        <p>{dateToString(data.deadLine)}</p>
-        <button type="button" onClick={() => dispatch(closeModal())}>
-          확인
-        </button>
-      </ModalWrapper>
-    </ModalOverlay>
-  );
-}
-
-export { Modal };

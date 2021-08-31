@@ -17,6 +17,10 @@ const AddTodoForm = () => {
   const { todos } = useSelector((state: any) => state.todoReducer);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  /**
+   * ramdomId를 생성해주는 함수
+   * Crypto.getRandomValues() 함수는 암호학적으로 강력한 수준의 임의의(random) 값을 생성합니다. 매개 변수로 제공된 배열은 임의의 숫자로 채워집니다.
+   */
   const getRandomId = () => {
     const array = new Uint32Array(1);
     const randomId = window.crypto.getRandomValues(array);
@@ -49,6 +53,12 @@ const AddTodoForm = () => {
     dispatch(showToast({ showToast: true, title: '성공', desc: '등록 완료 되었습니다' }));
   };
 
+  /**
+   * 새로운 todo를 추가하는 함수
+   * 1. 작성 완료시 혹은 실패시 toast
+   * 2. dispatch로 addTodoRequest 요청을 보냄
+   * 3. submit 이후 초기값 리셋, localstorage 업데이트
+   */
   const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (inputValue.content.trim().length === 0) {

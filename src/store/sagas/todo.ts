@@ -1,4 +1,4 @@
-import { put, delay, takeLatest, all, fork, call } from 'redux-saga/effects';
+import { put, delay, takeLatest, all, fork } from 'redux-saga/effects';
 import { AnyAction } from 'redux';
 import axios, { AxiosResponse } from 'axios';
 import {
@@ -46,12 +46,15 @@ export function* loadTodos() {
 }
 
 function addTodoAPI(data: ITodo) {
-  return data;
-  // return axios.post(`${BASE_URL}/todo/${data.id}`, data);
+  try {
+    return axios.post(`${BASE_URL}/todo/${data.id}`, data);
+  } catch (err) {
+    throw new Error('Cannot find addTodoAPI');
+  }
 }
 
 export function* addTodo(action: AnyAction) {
-  const { data } = yield call(addTodoAPI, action.data);
+  // const { data } = yield call(addTodoAPI, action.data);
   try {
     yield delay(1000);
     yield put({
@@ -66,8 +69,16 @@ export function* addTodo(action: AnyAction) {
   }
 }
 
+function removeTodoAPI(data: ITodo) {
+  try {
+    return axios.post(`${BASE_URL}/todo/${data.id}`, data);
+  } catch (err) {
+    throw new Error('Cannot find removeTodoAPI');
+  }
+}
+
 export function* removeTodo(action: AnyAction) {
-  // const { data } = yield call(loadTodosAPI);
+  // const { data } = yield call(removeTodoAPI, action.data);
   try {
     yield delay(1000);
     yield put({
@@ -82,8 +93,16 @@ export function* removeTodo(action: AnyAction) {
   }
 }
 
+function editTodoAPI(data: ITodo) {
+  try {
+    return axios.post(`${BASE_URL}/todo/${data.id}`, data);
+  } catch (err) {
+    throw new Error('Cannot find editTodoAPI');
+  }
+}
+
 export function* editTodo(action: AnyAction) {
-  // const { data } = yield call(loadTodosAPI);
+  // const { data } = yield call(editTodoAPI, action.data);
   try {
     yield put({
       type: EDIT_TODO_SUCCESS,
@@ -98,26 +117,24 @@ export function* editTodo(action: AnyAction) {
 }
 
 export function* sortByDeadline(action: AnyAction) {
-  // const { data } = yield call(loadTodosAPI);
   try {
     yield put({
       type: SORT_BY_DEADLINE_SUCCESS,
       data: action.data,
     });
   } catch (error) {
-    throw new Error('sorting ERROR');
+    throw new Error('cannot find sortByDeadline');
   }
 }
 
 export function* sortByCreatedAt(action: AnyAction) {
-  // const { data } = yield call(loadTodosAPI);
   try {
     yield put({
       type: SORT_BY_CREATEDAT_SUCCESS,
       data: action.data,
     });
   } catch (error) {
-    throw new Error('sorting ERROR');
+    throw new Error('cannot find sortByCreatedAt');
   }
 }
 

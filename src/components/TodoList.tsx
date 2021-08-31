@@ -18,6 +18,9 @@ function TodoList() {
   const { todos, removeTodoLoading } = useSelector((state: IrootType) => state.todoReducer);
   const [sortType, setSortType] = useState(true);
 
+  /**
+   * 생성일, 마감일별로 sorting 리덕스 Request를 요청하는 함수
+   */
   const handleSorting = (isCreated: boolean) => {
     setSortType((prev) => !prev);
     if (isCreated) {
@@ -47,6 +50,7 @@ function TodoList() {
                 <FiFilter size={15} />
               </button>
             </StyledTh>
+            <th>쳌</th>
           </tr>
         </thead>
         <tbody>

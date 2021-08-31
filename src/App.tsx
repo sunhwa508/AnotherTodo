@@ -13,7 +13,7 @@ function App() {
   useEffect(() => {
     dispatch(loadTodosRequest());
   }, []);
-  console.log(showModal);
+
   return (
     <AppLayout>
       <AddTodoForm />

@@ -1,7 +1,7 @@
 import produce from 'immer';
 import { AnyAction } from 'redux';
-import * as TYPES from '../actions/action';
-import { ITodoList, Status } from '../../utils/types';
+import * as TYPES from 'store/actions/action';
+import { ITodoList } from 'utils/types';
 
 export interface InitialTodosProps {
   todos: ITodoList;

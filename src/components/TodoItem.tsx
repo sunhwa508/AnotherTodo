@@ -41,6 +41,15 @@ const TodoItem = ({ todo }: Props) => {
     setInputValue({ ...inputValue, [event.target.name]: event.target.value });
     dispatch(editTodoRequest({ ...inputValue, [event.target.name]: event.target.value }));
   };
+
+  const handleCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = event.target;
+    setInputValue({ ...inputValue, [name]: checked });
+  };
+
+  /**
+   * todo 수정 함수
+   */
   const onClickEdit = () => {
     if (inputValue.content.trim().length === 0) {
       dispatch(showToast({ showToast: true, title: '👀', desc: '할일을 입력해주세요' }));
@@ -49,6 +58,9 @@ const TodoItem = ({ todo }: Props) => {
     setEditMode((prev) => !prev);
   };
 
+  /**
+   * todo값 수정 이후 todos.todoList 값이 변경 된다면 localstorage 업데이트
+   */
   useEffect(() => {
     localStorage.setItem('todos', JSON.stringify(todos.todoList));
   }, [todos.todoList]);
@@ -100,6 +112,19 @@ const TodoItem = ({ todo }: Props) => {
         </button>
       </StyledRemoveTd>
       <td>{dateToString(todo.createdAt)}</td>
+      <td>
+        <input
+          onChange={(e) => {
+            handleCheck(e);
+          }}
+          key={todo.id}
+          id={todo.id}
+          type="checkbox"
+          name="isCheck"
+          checked={inputValue.isCheck}
+        />
+        <label htmlFor={todo.id} />
+      </td>
     </>
   );
 };
