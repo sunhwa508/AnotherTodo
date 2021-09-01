@@ -11,7 +11,7 @@
 # 📚 구현 사항
 
 `전역상태관리` -
-redux, redux-saga 전역 관리 구현
+redux, redux-saga 전역 상태 관리 구현
 (todo, modal, toast)
 
 `컴포넌트` -
@@ -30,11 +30,12 @@ header, Todo리스트, 상세모달, Toast 컴포넌트 구현
 1. `"react-icons": "^4.2.0"` <br/>
    다양한 icons 사용을 위한 라이브러리
 2. `"immer": "^9.0.5"` <br/>
-   불변성을 지키다 보면 생길수 있는 복잡한 코드를 간결하게 작성하게 해 주는 라이브러리
+   불변성을 지키다 보면 생길수 있는 복잡한 코드의 간결한 작성을 도와주는 라이브러리
 3. `"react-datepicker": "^4.2.1"` <br/>
    deadLine설정을 위한 달력 라이브러리
 4. `"redux-devtools-extension": "^2.13.9"` <br/>
-   리덕스 디버깅을 위한 미들웨어
+   리덕스 디버깅을 위한 리덕스 개발자 도구
+   Redux DevTool은 크롬 익스텐션 다운로드를 통해 사용 가능
 
 # 📱 설치 및 시작하는 법
 
@@ -70,3 +71,4 @@ header, Todo리스트, 상세모달, Toast 컴포넌트 구현
 ## Reference
 
 api 참조 - [api명세서](https://noisy-vertebra-1b7.notion.site/Todolist-api-c4b7d3cf69a84ca3b6fa402198d2b634)
+immer 관련 문서 - [immer 도입하기](https://velog.io/@sunhwa508/immer-%EB%8F%84%EC%9E%85%ED%95%98%EA%B8%B0)
