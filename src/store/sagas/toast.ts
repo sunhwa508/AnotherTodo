@@ -1,4 +1,4 @@
-import { fork, all, delay, put, throttle, takeLatest } from 'redux-saga/effects';
+import { fork, all, delay, put, throttle } from 'redux-saga/effects';
 import { SHOW_TOAST, CLOSE_TOAST } from 'store/actions/action';
 
 export function* showToast() {

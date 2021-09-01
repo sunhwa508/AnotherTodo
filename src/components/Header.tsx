@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Header = () => {
-  return <Wrapper>할일기록장</Wrapper>;
+  return <Wrapper>할일 기록장</Wrapper>;
 };
 
 const Wrapper = styled.div`
@@ -13,5 +13,6 @@ const Wrapper = styled.div`
   width: 100vw;
   font-size: 2rem;
   margin-bottom: 20px;
+  padding: 30px 0;
 `;
 export { Header };

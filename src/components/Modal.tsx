@@ -46,7 +46,7 @@ const ModalOverlay = styled.div`
 
 const ModalWrapper = styled.div`
   position: absolute;
-  top: 50%;
+  top: 40%;
   left: 50%;
   width: 400px;
   padding: 10px 20px 100px 20px;
@@ -71,12 +71,13 @@ const ModalWrapper = styled.div`
     position: absolute;
     bottom: 0;
     left: 0;
-    background-color: #959595;
+    background-color: #f0b0b0;
     padding: 15px 10px;
     border-radius: 0 0 5px 5px;
     cursor: pointer;
     &:hover {
-      background-color: #cacaca;
+      background-color: #f04545;
+      color: white;
     }
   }
 `;

@@ -108,7 +108,7 @@ const TodoItem = ({ todo }: Props) => {
       </StyledRemoveTd>
       <td>{dateToString(todo.created_at)}</td>
       <td>
-        <input
+        <StyledInput
           onChange={(e) => {
             handleCheck(e);
           }}
@@ -118,7 +118,7 @@ const TodoItem = ({ todo }: Props) => {
           name="isCheck"
           checked={inputValue.isCheck}
         />
-        <label htmlFor={todo.id} />
+        <StyledLabel htmlFor={todo.id}> ❤</StyledLabel>
       </td>
     </>
   );
@@ -126,6 +126,28 @@ const TodoItem = ({ todo }: Props) => {
 
 export { TodoItem };
 
+const StyledLabel = styled.label`
+  color: #aab8c2;
+  cursor: pointer;
+  font-size: 2em;
+  align-self: center;
+  transition: color 0.2s ease-in-out;
+  &:hover {
+    color: grey;
+  }
+  &::selection {
+    color: none;
+    background: transparent;
+  }
+`;
+const StyledInput = styled.input`
+  position: absolute;
+  left: -100vw;
+  &:checked + label {
+    color: #e2264d;
+    will-change: font-size;
+  }
+`;
 const StyledRemoveTd = styled.td`
   & button {
     margin: 5px;
