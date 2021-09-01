@@ -1,6 +1,9 @@
 import { fork, all, delay, put, throttle } from 'redux-saga/effects';
 import { SHOW_TOAST, CLOSE_TOAST } from 'store/actions/action';
 
+/**
+ * 3초후 Close Toast 호출
+ */
 export function* showToast() {
   yield delay(3000);
   yield put({

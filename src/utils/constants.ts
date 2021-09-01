@@ -1,7 +1,5 @@
 import { Status } from './types';
 
-export const BASE_URL = 'https://limitless-river-98904.herokuapp.com';
-
 export const STATUS_NAME = {
   TODO: '할 것',
   IN_PROGRESS: '진행중인것',

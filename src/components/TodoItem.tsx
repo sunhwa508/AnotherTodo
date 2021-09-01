@@ -33,7 +33,6 @@ const TodoItem = ({ todo }: Props) => {
 
   const removeTodo = (data: ITodo) => {
     dispatch(removeTodoRequest(data));
-    dispatch(showToast({ showToast: true, title: '', desc: '삭제가 완료 되었습니다' }));
   };
 
   /**
@@ -85,7 +84,7 @@ const TodoItem = ({ todo }: Props) => {
         <StyledTd done={todo.status === STATUS_NAME.DONE}>
           <div onClick={() => dispatch(showModal(todo))}>{todo.content}</div>
           {!(todo.status === STATUS_NAME.DONE) && (
-            <button type="button" onClick={handleClickEdit}>
+            <button type="button" onClick={() => setEditMode((prev) => !prev)}>
               <BiEditAlt size={20} />
             </button>
           )}

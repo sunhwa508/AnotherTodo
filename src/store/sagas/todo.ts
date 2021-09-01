@@ -20,13 +20,18 @@ import {
   SORT_BY_CREATEDAT_SUCCESS,
   SHOW_TOAST,
 } from 'store/actions/action';
-import { BASE_URL } from 'utils/constants';
 import { InitialTodosProps } from 'store/reducers/todoReducer';
 import { ITodo } from 'utils/types';
+import { globalEnv } from 'config/env';
+
+/**
+ * [GET] todos
+ * 데이터를 불러온다
+ */
 
 function loadTodosAPI(): Promise<AxiosResponse<InitialTodosProps>> | undefined {
   try {
-    return axios.get(`${BASE_URL}/todos`);
+    return axios.get(`${globalEnv.API_ENDPOINT}/todos`);
   } catch (err) {
     throw new Error('Cannot find loadTodosAPI');
   }
@@ -48,9 +53,12 @@ export function* loadTodos() {
   }
 }
 
+/**
+ * [POST] 새로운 todo를 추가하고 성공시 toast 생성
+ */
 function addTodoAPI(data: ITodo) {
   try {
-    return axios.post(`${BASE_URL}/todos`, data);
+    return axios.post(`${globalEnv.API_ENDPOINT}/todos`, data);
   } catch (err) {
     throw new Error('Cannot find addTodoAPI');
   }
@@ -58,11 +66,16 @@ function addTodoAPI(data: ITodo) {
 
 export function* addTodo(action: AnyAction) {
   const { data } = yield call(addTodoAPI, action.data);
+  const toastData = { showToast: true, title: '등록성공', desc: '등록 완료 되었습니다' };
   try {
     yield delay(1000);
     yield put({
       type: ADD_TODO_SUCCESS,
       data,
+    });
+    yield put({
+      type: SHOW_TOAST,
+      data: toastData,
     });
   } catch (error) {
     yield put({
@@ -72,9 +85,12 @@ export function* addTodo(action: AnyAction) {
   }
 }
 
+/**
+ * [DELETE] todo를 삭제하고 성공시 toast 생성
+ */
 function removeTodoAPI(data: ITodo) {
   try {
-    return axios.delete(`${BASE_URL}/todos/${data.id}`);
+    return axios.delete(`${globalEnv.API_ENDPOINT}/todos/${data.id}`);
   } catch (err) {
     throw new Error('Cannot find removeTodoAPI');
   }
@@ -82,11 +98,16 @@ function removeTodoAPI(data: ITodo) {
 
 export function* removeTodo(action: AnyAction) {
   const { data } = yield call(removeTodoAPI, action.data);
+  const toastData = { showToast: true, title: '', desc: '삭제가 완료 되었습니다' };
   try {
     yield delay(1000);
     yield put({
       type: REMOVE_TODO_SUCCESS,
       data,
+    });
+    yield put({
+      type: SHOW_TOAST,
+      data: toastData,
     });
   } catch (error) {
     yield put({
@@ -96,9 +117,12 @@ export function* removeTodo(action: AnyAction) {
   }
 }
 
+/**
+ * [PUT] todo를 수정하고 성공시 toast 생성
+ */
 function editTodoAPI(data: ITodo) {
   try {
-    return axios.put(`${BASE_URL}/todos/${data.id}`, data);
+    return axios.put(`${globalEnv.API_ENDPOINT}/todos/${data.id}`, data);
   } catch (err) {
     throw new Error('Cannot find editTodoAPI');
   }
@@ -106,10 +130,15 @@ function editTodoAPI(data: ITodo) {
 
 export function* editTodo(action: AnyAction) {
   const { data } = yield call(editTodoAPI, action.data);
+  const toastData = { showToast: true, title: '', desc: '수정이 완료 되었습니다' };
   try {
     yield put({
       type: EDIT_TODO_SUCCESS,
       data,
+    });
+    yield put({
+      type: SHOW_TOAST,
+      data: toastData,
     });
   } catch (error) {
     yield put({
@@ -119,6 +148,9 @@ export function* editTodo(action: AnyAction) {
   }
 }
 
+/**
+ * deadline 순으로 정렬
+ */
 export function* sortByDeadline(action: AnyAction) {
   try {
     yield put({
@@ -130,6 +162,9 @@ export function* sortByDeadline(action: AnyAction) {
   }
 }
 
+/**
+ * created_at 순으로 정렬
+ */
 export function* sortByCreatedAt(action: AnyAction) {
   try {
     yield put({
