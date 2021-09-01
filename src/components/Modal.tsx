@@ -58,7 +58,7 @@ const ModalWrapper = styled.div`
   & h3 {
     margin: 15px 0;
     padding: 20px;
-    border: 1px solid black;
+    border: 1px solid gray;
   }
   & span {
     margin: 15px 0;

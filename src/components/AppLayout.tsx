@@ -15,6 +15,10 @@ const Layout = styled.div`
   background-color: #c5c2c21a;
 `;
 
+/**
+ * 전체화면 레이아웃
+ */
+
 const AppLayout = ({ children }: Props) => (
   <Layout>
     <Header />

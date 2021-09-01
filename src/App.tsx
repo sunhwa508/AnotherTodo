@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import './App.css';
 import { useSelector, useDispatch } from 'react-redux';
+
 import { IrootType } from 'store/reducers';
 import { AddTodoForm, TodoList, AppLayout, Toast, Modal } from 'components';
 import { loadTodosRequest } from 'store/actions/action';

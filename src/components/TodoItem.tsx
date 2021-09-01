@@ -31,16 +31,13 @@ const TodoItem = ({ todo }: Props) => {
     status: todo.status,
   });
 
-  const removeTodo = (data: ITodo) => {
-    dispatch(removeTodoRequest(data));
-  };
-
   /**
    *  todo를 수정하는 함수
-   * 1. handleSelectChange status 값이 변경 될 때마다 호출
-   * 2. handleInputChange content 값이 변경 될때마다 호출
-   * 3. handleCheckChange check 상태가 변경될때마다 호출
+   * 1. handleSelectChange status 값이 변경 될 때 호출
+   * 2. handleInputChange content 값이 변경 될 때 호출
+   * 3. handleCheckChange check 상태가 변경 될 때 호출
    * 4. handleClickEdit content값 수정 후 저장버튼 누르는 경우
+   * 5. removeTodo 삭제함수
    */
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setInputValue({ ...inputValue, [event.target.name]: event.target.value });
@@ -64,6 +61,10 @@ const TodoItem = ({ todo }: Props) => {
     }
     setEditMode((prev) => !prev);
     dispatch(editTodoRequest(inputValue));
+  };
+
+  const removeTodo = (data: ITodo) => {
+    dispatch(removeTodoRequest(data));
   };
 
   return (

@@ -38,9 +38,9 @@ const AddTodoForm = () => {
 
   /**
    * 새로운 todo를 추가하는 함수
-   * 1. 작성 완료시 혹은 실패시 toast
-   * 2. dispatch로 addTodoRequest 요청을 보냄 (api 통신)
-   * 3. submit 이후 초기값 리셋
+   * 1. 작성 완료, 실패시 toast 호출
+   * 2. submit 이후 addTodoRequest 요청을 보냄 (api 통신)
+   * 3. 초기값 리셋
    */
   const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -53,28 +53,26 @@ const AddTodoForm = () => {
   };
 
   return (
-    <>
-      <Form onSubmit={handleSubmit}>
-        <FormInput
-          ref={inputRef}
-          value={inputValue.content}
-          name="content"
-          placeholder="할일을 적으시오"
-          onChange={(event) => handleChange(event)}
-        />
-        <DatePicker
-          dateFormat="yyyy-MM-dd"
-          minDate={new Date()}
-          closeOnScroll
-          placeholderText="마감 날짜 선택"
-          selected={inputValue.deadLine}
-          onChange={(date: Date) => setInputValue({ ...inputValue, deadLine: date })}
-        />
-        <button type="submit">
-          <IoAddCircleSharp size={30} />
-        </button>
-      </Form>
-    </>
+    <Form onSubmit={handleSubmit}>
+      <FormInput
+        ref={inputRef}
+        value={inputValue.content}
+        name="content"
+        placeholder="할일을 적으시오"
+        onChange={(event) => handleChange(event)}
+      />
+      <DatePicker
+        dateFormat="yyyy-MM-dd"
+        minDate={new Date()}
+        closeOnScroll
+        placeholderText="마감 날짜 선택"
+        selected={inputValue.deadLine}
+        onChange={(date: Date) => setInputValue({ ...inputValue, deadLine: date })}
+      />
+      <button type="submit">
+        <IoAddCircleSharp size={30} />
+      </button>
+    </Form>
   );
 };
 

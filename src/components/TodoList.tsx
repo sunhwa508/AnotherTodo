@@ -21,7 +21,7 @@ function TodoList() {
   const [sortType, setSortType] = useState(true);
 
   /**
-   * 생성일, 마감일 순 sorting하는 Request를 요청하는 함수
+   * handleSorting 생성일, 마감일 순 sorting하는 Request를 요청하는 함수
    */
   const handleSorting = (isCreated: boolean) => {
     setSortType((prev) => !prev);
