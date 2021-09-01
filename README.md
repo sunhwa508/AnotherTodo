@@ -52,3 +52,9 @@ header, Todo리스트, 모달, Toast 컴포넌트 구현
 `prettier` 플러그인을 사용하여 스타일을 관리합니다.
 
 ## 5.배포
+
+https://paywork-todo.netlify.app
+
+## REFERANCE
+
+[api명세서](https://noisy-vertebra-1b7.notion.site/Todolist-api-c4b7d3cf69a84ca3b6fa402198d2b634)

@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { IoAddCircleSharp } from 'react-icons/io5';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -8,12 +8,9 @@ import styled from 'styled-components';
 import { ITodo, Status } from 'utils/types';
 import { STATUS_NAME } from 'utils/constants';
 import { addTodoRequest, showToast } from 'store/actions/action';
-import { IrootType } from 'store/reducers';
-import { Loader } from 'components';
 
 const AddTodoForm = () => {
   const dispatch = useDispatch();
-  const { addTodoLoading } = useSelector((state: IrootType) => state.todoReducer);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [inputValue, setInputValue] = useState<ITodo>({
@@ -78,7 +75,6 @@ const AddTodoForm = () => {
           <IoAddCircleSharp size={30} />
         </button>
       </Form>
-      {addTodoLoading && <Loader />}
     </>
   );
 };

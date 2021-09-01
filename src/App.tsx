@@ -18,7 +18,7 @@ function App() {
     <AppLayout>
       <AddTodoForm />
       <TodoList />
-      <Toast active={showToast} title={title} desc={desc} />
+      {showToast && <Toast active={showToast} title={title} desc={desc} />}
       {showModal && <Modal data={data} />}
     </AppLayout>
   );

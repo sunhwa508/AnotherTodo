@@ -71,12 +71,13 @@ const ModalWrapper = styled.div`
     position: absolute;
     bottom: 0;
     left: 0;
-    background-color: #f0b0b0;
+    background-color: #d4d4d4;
     padding: 15px 10px;
     border-radius: 0 0 5px 5px;
     cursor: pointer;
+    font-weight: bold;
     &:hover {
-      background-color: #f04545;
+      background-color: #ffd400;
       color: white;
     }
   }

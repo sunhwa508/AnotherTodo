@@ -15,11 +15,13 @@ interface IstyleProps {
 
 function TodoList() {
   const dispatch = useDispatch();
-  const { todos, removeTodoLoading } = useSelector((state: IrootType) => state.todoReducer);
+  const { todos, removeTodoLoading, editTodoLoading, addTodoLoading } = useSelector(
+    (state: IrootType) => state.todoReducer
+  );
   const [sortType, setSortType] = useState(true);
 
   /**
-   * 생성일, 마감일별로 sorting 리덕스 Request를 요청하는 함수
+   * 생성일, 마감일 순 sorting하는 Request를 요청하는 함수
    */
   const handleSorting = (isCreated: boolean) => {
     setSortType((prev) => !prev);
@@ -66,6 +68,8 @@ function TodoList() {
         </tbody>
       </Wrapper>
       {removeTodoLoading && <Loader />}
+      {editTodoLoading && <Loader />}
+      {addTodoLoading && <Loader />}
     </>
   );
 }

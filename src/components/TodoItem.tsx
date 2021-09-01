@@ -38,26 +38,33 @@ const TodoItem = ({ todo }: Props) => {
 
   /**
    *  todo를 수정하는 함수
-   * 1. content, status 변경시 호출
-   * 2. check에 대한 호출(과제)
+   * 1. handleSelectChange status 값이 변경 될 때마다 호출
+   * 2. handleInputChange content 값이 변경 될때마다 호출
+   * 3. handleCheckChange check 상태가 변경될때마다 호출
+   * 4. handleClickEdit content값 수정 후 저장버튼 누르는 경우
    */
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
+  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setInputValue({ ...inputValue, [event.target.name]: event.target.value });
     dispatch(editTodoRequest({ ...inputValue, [event.target.name]: event.target.value }));
   };
 
-  const handleCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue({ ...inputValue, [event.target.name]: event.target.value });
+  };
+
+  const handleCheckChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = event.target;
     setInputValue({ ...inputValue, [name]: checked });
     dispatch(editTodoRequest({ ...inputValue, [name]: checked }));
   };
 
-  const onClickEdit = () => {
+  const handleClickEdit = () => {
     if (inputValue.content.trim().length === 0) {
       dispatch(showToast({ showToast: true, title: '', desc: '할일을 입력해주세요' }));
       return;
     }
     setEditMode((prev) => !prev);
+    dispatch(editTodoRequest(inputValue));
   };
 
   return (
@@ -65,12 +72,12 @@ const TodoItem = ({ todo }: Props) => {
       {editMode ? (
         <StyledTd done={todo.status === STATUS_NAME.DONE}>
           <input
-            value={todo.content}
+            value={inputValue.content}
             name="content"
             placeholder="Add your new todo"
-            onChange={(event) => handleChange(event)}
+            onChange={(event) => handleInputChange(event)}
           />
-          <button type="button" onClick={onClickEdit}>
+          <button type="button" onClick={handleClickEdit}>
             <BiSave size={20} />
           </button>
         </StyledTd>
@@ -78,7 +85,7 @@ const TodoItem = ({ todo }: Props) => {
         <StyledTd done={todo.status === STATUS_NAME.DONE}>
           <div onClick={() => dispatch(showModal(todo))}>{todo.content}</div>
           {!(todo.status === STATUS_NAME.DONE) && (
-            <button type="button" onClick={onClickEdit}>
+            <button type="button" onClick={handleClickEdit}>
               <BiEditAlt size={20} />
             </button>
           )}
@@ -89,9 +96,9 @@ const TodoItem = ({ todo }: Props) => {
           value={inputValue.status}
           id="status"
           name="status"
-          onChange={(e) => handleChange(e)}
+          onChange={(e) => handleSelectChange(e)}
         >
-          {listOfStatus.map((status: string, index: number) => {
+          {listOfStatus.map((status: string) => {
             return (
               <option key={status} defaultValue={inputValue.status} value={status}>
                 {status}
@@ -110,7 +117,7 @@ const TodoItem = ({ todo }: Props) => {
       <td>
         <StyledInput
           onChange={(e) => {
-            handleCheck(e);
+            handleCheckChange(e);
           }}
           key={todo.id}
           id={todo.id}
@@ -118,7 +125,7 @@ const TodoItem = ({ todo }: Props) => {
           name="isCheck"
           checked={inputValue.isCheck}
         />
-        <StyledLabel htmlFor={todo.id}> ❤</StyledLabel>
+        <StyledLabel htmlFor={todo.id}>★</StyledLabel>
       </td>
     </>
   );
@@ -144,7 +151,7 @@ const StyledInput = styled.input`
   position: absolute;
   left: -100vw;
   &:checked + label {
-    color: #e2264d;
+    color: #ffd400;
     will-change: font-size;
   }
 `;
