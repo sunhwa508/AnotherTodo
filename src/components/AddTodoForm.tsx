@@ -37,7 +37,7 @@ const AddTodoForm = () => {
       status: STATUS_NAME[Status.TODO],
     });
     inputRef?.current?.focus();
-    dispatch(showToast({ showToast: true, title: '성공', desc: '등록 완료 되었습니다' }));
+    dispatch(showToast({ showToast: true, title: '등록성공', desc: '등록 완료 되었습니다' }));
   };
 
   /**

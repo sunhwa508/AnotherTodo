@@ -33,7 +33,7 @@ const TodoItem = ({ todo }: Props) => {
 
   const removeTodo = (data: ITodo) => {
     dispatch(removeTodoRequest(data));
-    dispatch(showToast({ showToast: true, title: '🔥', desc: '삭제 되었습니다' }));
+    dispatch(showToast({ showToast: true, title: '', desc: '삭제가 완료 되었습니다' }));
   };
 
   /**
@@ -54,7 +54,7 @@ const TodoItem = ({ todo }: Props) => {
 
   const onClickEdit = () => {
     if (inputValue.content.trim().length === 0) {
-      dispatch(showToast({ showToast: true, title: '👀', desc: '할일을 입력해주세요' }));
+      dispatch(showToast({ showToast: true, title: '', desc: '할일을 입력해주세요' }));
       return;
     }
     setEditMode((prev) => !prev);
@@ -156,6 +156,7 @@ const StyledRemoveTd = styled.td`
 const StyledTd = styled.td`
   text-decoration: ${(props: IstyleProps) => (props.done ? 'line-through' : 'none')};
   position: relative;
+  cursor: pointer;
   & div {
     width: 200px;
     overflow: hidden;
