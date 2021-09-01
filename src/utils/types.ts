@@ -10,10 +10,10 @@ export interface ITodoList {
 }
 
 export interface ITodo {
-  id: string;
+  id?: string;
   content: string;
   isCheck: boolean;
-  createdAt: Date;
+  created_at: Date;
   deadLine: Date;
   status: string;
 }

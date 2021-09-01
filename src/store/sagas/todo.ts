@@ -1,4 +1,4 @@
-import { put, delay, takeLatest, all, fork } from 'redux-saga/effects';
+import { put, delay, takeLatest, all, fork, call } from 'redux-saga/effects';
 import { AnyAction } from 'redux';
 import axios, { AxiosResponse } from 'axios';
 import {
@@ -25,18 +25,20 @@ import { ITodo } from 'utils/types';
 
 function loadTodosAPI(): Promise<AxiosResponse<InitialTodosProps>> | undefined {
   try {
-    return axios.get(`${BASE_URL}/todo`);
+    return axios.get(`${BASE_URL}/todos`);
   } catch (err) {
     throw new Error('Cannot find loadTodosAPI');
   }
 }
 
 export function* loadTodos() {
-  // const { data } = yield call(loadTodosAPI);
+  // call 을 사용하면 특정 함수를 호출하고, 결과물이 반환 될 때까지 기다려줄 수 있다.
+  const { data } = yield call(loadTodosAPI);
   try {
     yield delay(1000);
     yield put({
       type: LOAD_TODOS_SUCCESS,
+      data,
     });
   } catch (error) {
     yield put({
@@ -47,19 +49,19 @@ export function* loadTodos() {
 
 function addTodoAPI(data: ITodo) {
   try {
-    return axios.post(`${BASE_URL}/todo/${data.id}`, data);
+    return axios.post(`${BASE_URL}/todos`, data);
   } catch (err) {
     throw new Error('Cannot find addTodoAPI');
   }
 }
 
 export function* addTodo(action: AnyAction) {
-  // const { data } = yield call(addTodoAPI, action.data);
+  const { data } = yield call(addTodoAPI, action.data);
   try {
     yield delay(1000);
     yield put({
       type: ADD_TODO_SUCCESS,
-      data: action.data,
+      data,
     });
   } catch (error) {
     yield put({
@@ -71,19 +73,19 @@ export function* addTodo(action: AnyAction) {
 
 function removeTodoAPI(data: ITodo) {
   try {
-    return axios.post(`${BASE_URL}/todo/${data.id}`, data);
+    return axios.delete(`${BASE_URL}/todos/${data.id}`);
   } catch (err) {
     throw new Error('Cannot find removeTodoAPI');
   }
 }
 
 export function* removeTodo(action: AnyAction) {
-  // const { data } = yield call(removeTodoAPI, action.data);
+  const { data } = yield call(removeTodoAPI, action.data);
   try {
     yield delay(1000);
     yield put({
       type: REMOVE_TODO_SUCCESS,
-      data: action.data,
+      data,
     });
   } catch (error) {
     yield put({
@@ -95,18 +97,18 @@ export function* removeTodo(action: AnyAction) {
 
 function editTodoAPI(data: ITodo) {
   try {
-    return axios.post(`${BASE_URL}/todo/${data.id}`, data);
+    return axios.put(`${BASE_URL}/todos/${data.id}`, data);
   } catch (err) {
     throw new Error('Cannot find editTodoAPI');
   }
 }
 
 export function* editTodo(action: AnyAction) {
-  // const { data } = yield call(editTodoAPI, action.data);
+  const { data } = yield call(editTodoAPI, action.data);
   try {
     yield put({
       type: EDIT_TODO_SUCCESS,
-      data: action.data,
+      data,
     });
   } catch (error) {
     yield put({

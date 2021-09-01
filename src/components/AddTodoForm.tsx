@@ -14,24 +14,12 @@ import { Loader } from 'components';
 const AddTodoForm = () => {
   const dispatch = useDispatch();
   const { addTodoLoading } = useSelector((state: IrootType) => state.todoReducer);
-  const { todos } = useSelector((state: any) => state.todoReducer);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  /**
-   * ramdomId를 생성해주는 함수
-   * Crypto.getRandomValues() 함수는 암호학적으로 강력한 수준의 임의의(random) 값을 생성합니다. 매개 변수로 제공된 배열은 임의의 숫자로 채워집니다.
-   */
-  const getRandomId = () => {
-    const array = new Uint32Array(1);
-    const randomId = window.crypto.getRandomValues(array);
-    return String(randomId[0]);
-  };
-
   const [inputValue, setInputValue] = useState<ITodo>({
-    id: getRandomId(),
     content: '',
     isCheck: false,
-    createdAt: new Date(),
+    created_at: new Date(),
     deadLine: new Date(),
     status: STATUS_NAME[Status.TODO],
   });
@@ -42,10 +30,9 @@ const AddTodoForm = () => {
 
   const onInputReset = () => {
     setInputValue({
-      id: getRandomId(),
       content: '',
       isCheck: false,
-      createdAt: new Date(),
+      created_at: new Date(),
       deadLine: new Date(),
       status: STATUS_NAME[Status.TODO],
     });
@@ -56,8 +43,8 @@ const AddTodoForm = () => {
   /**
    * 새로운 todo를 추가하는 함수
    * 1. 작성 완료시 혹은 실패시 toast
-   * 2. dispatch로 addTodoRequest 요청을 보냄
-   * 3. submit 이후 초기값 리셋, localstorage 업데이트
+   * 2. dispatch로 addTodoRequest 요청을 보냄 (api 통신)
+   * 3. submit 이후 초기값 리셋
    */
   const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -67,7 +54,6 @@ const AddTodoForm = () => {
     }
     dispatch(addTodoRequest(inputValue));
     onInputReset();
-    localStorage.setItem('todos', JSON.stringify([...todos.todoList, inputValue]));
   };
 
   return (

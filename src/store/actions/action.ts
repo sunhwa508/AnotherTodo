@@ -29,11 +29,11 @@ export const CLOSE_TOAST = 'CLOSE_TOAST';
 export const SHOW_MODAL = 'SHOW_MODAL';
 export const CLOSE_MODAL = 'CLOSE_MODAL';
 
-export function loadTodosRequest() {
+export const loadTodosRequest = () => {
   return {
     type: LOAD_TODOS_REQUEST,
   };
-}
+};
 
 export const addTodoRequest = (data: ITodo) => ({
   type: ADD_TODO_REQUEST,

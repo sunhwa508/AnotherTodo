@@ -50,7 +50,7 @@ function TodoList() {
                 <FiFilter size={15} />
               </button>
             </StyledTh>
-            <th>쳌</th>
+            <th>중요</th>
           </tr>
         </thead>
         <tbody>

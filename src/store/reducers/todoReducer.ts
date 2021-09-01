@@ -47,7 +47,6 @@ const initialTodosState: InitialTodosProps = {
 };
 
 const todoReducer = (state = initialTodosState, action: AnyAction) => {
-  const todos = localStorage.getItem('todos');
   return produce(state, (draft) => {
     switch (action.type) {
       case TYPES.LOAD_TODOS_REQUEST:
@@ -58,7 +57,7 @@ const todoReducer = (state = initialTodosState, action: AnyAction) => {
       case TYPES.LOAD_TODOS_SUCCESS:
         draft.loadTodosLoading = false;
         draft.loadTodosDone = true;
-        draft.todos.todoList = todos ? JSON.parse(todos) : [];
+        draft.todos.todoList = action.data;
         break;
       case TYPES.LOAD_TODOS_FAILURE:
         draft.loadTodosLoading = false;
@@ -73,7 +72,7 @@ const todoReducer = (state = initialTodosState, action: AnyAction) => {
         draft.addTodoLoading = false;
         draft.addTodoDone = true;
         draft.todos.todoList = [...draft.todos.todoList, action.data];
-        draft.todos.count += draft.todos.count;
+        draft.todos.count = [...draft.todos.todoList, action.data].length;
         break;
       case TYPES.ADD_TODO_FAILURE:
         draft.addTodoLoading = false;
@@ -88,6 +87,7 @@ const todoReducer = (state = initialTodosState, action: AnyAction) => {
         draft.removeTodoLoading = false;
         draft.removeTodoDone = true;
         draft.todos.todoList = draft.todos.todoList.filter((v) => v.id !== action.data.id);
+        draft.todos.count = draft.todos.todoList.length;
         break;
       case TYPES.REMOVE_TODO_FAILURE:
         draft.removeTodoLoading = false;
@@ -130,8 +130,8 @@ const todoReducer = (state = initialTodosState, action: AnyAction) => {
         draft.sortByCreatedAtDone = true;
         draft.todos.todoList.sort((a, b) => {
           return action.data
-            ? new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-            : new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+            ? new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+            : new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
         });
         break;
       default:

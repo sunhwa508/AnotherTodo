@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { BiEditAlt, BiSave } from 'react-icons/bi';
 import { RiDeleteBinLine } from 'react-icons/ri';
 
@@ -20,14 +20,13 @@ interface Props {
 }
 
 const TodoItem = ({ todo }: Props) => {
-  const { todos } = useSelector((state: any) => state.todoReducer);
   const dispatch = useDispatch();
   const [editMode, setEditMode] = useState(false);
   const [inputValue, setInputValue] = useState<ITodo>({
     id: todo.id,
     content: todo.content,
     isCheck: todo.isCheck,
-    createdAt: todo.createdAt,
+    created_at: todo.created_at,
     deadLine: todo.deadLine,
     status: todo.status,
   });
@@ -37,6 +36,11 @@ const TodoItem = ({ todo }: Props) => {
     dispatch(showToast({ showToast: true, title: '🔥', desc: '삭제 되었습니다' }));
   };
 
+  /**
+   *  todo를 수정하는 함수
+   * 1. content, status 변경시 호출
+   * 2. check에 대한 호출(과제)
+   */
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     setInputValue({ ...inputValue, [event.target.name]: event.target.value });
     dispatch(editTodoRequest({ ...inputValue, [event.target.name]: event.target.value }));
@@ -45,11 +49,9 @@ const TodoItem = ({ todo }: Props) => {
   const handleCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = event.target;
     setInputValue({ ...inputValue, [name]: checked });
+    dispatch(editTodoRequest({ ...inputValue, [name]: checked }));
   };
 
-  /**
-   * todo 수정 함수
-   */
   const onClickEdit = () => {
     if (inputValue.content.trim().length === 0) {
       dispatch(showToast({ showToast: true, title: '👀', desc: '할일을 입력해주세요' }));
@@ -57,13 +59,6 @@ const TodoItem = ({ todo }: Props) => {
     }
     setEditMode((prev) => !prev);
   };
-
-  /**
-   * todo값 수정 이후 todos.todoList 값이 변경 된다면 localstorage 업데이트
-   */
-  useEffect(() => {
-    localStorage.setItem('todos', JSON.stringify(todos.todoList));
-  }, [todos.todoList]);
 
   return (
     <>
@@ -111,7 +106,7 @@ const TodoItem = ({ todo }: Props) => {
           <RiDeleteBinLine size={20} />
         </button>
       </StyledRemoveTd>
-      <td>{dateToString(todo.createdAt)}</td>
+      <td>{dateToString(todo.created_at)}</td>
       <td>
         <input
           onChange={(e) => {

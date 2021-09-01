@@ -1,6 +1,6 @@
 import { Status } from './types';
 
-export const BASE_URL = 'http://dummy-server.io';
+export const BASE_URL = 'https://limitless-river-98904.herokuapp.com';
 
 export const STATUS_NAME = {
   TODO: '할 것',

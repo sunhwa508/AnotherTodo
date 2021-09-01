@@ -5,4 +5,6 @@ const options: Record<string, string> = {
   timeZone: 'UTC',
 };
 export const dateToString = (date: Date | string): string =>
-  typeof date === 'string' ? new Date(date).toLocaleString('ko-KR', options) : date.toLocaleString('ko-KR', options);
+  typeof date === 'string'
+    ? new Date(date).toLocaleString('ko-KR', options)
+    : date.toLocaleString('ko-KR', options);
