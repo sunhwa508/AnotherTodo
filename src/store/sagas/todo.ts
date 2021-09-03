@@ -1,4 +1,4 @@
-import { put, delay, takeLatest, all, fork, call } from 'redux-saga/effects';
+import { put, takeLatest, all, fork, call } from 'redux-saga/effects';
 import { AnyAction } from 'redux';
 import axios, { AxiosResponse } from 'axios';
 import {
@@ -41,7 +41,6 @@ export function* loadTodos() {
   // call 을 사용하면 특정 함수를 호출하고, 결과물이 반환 될 때까지 기다려줄 수 있다.
   const { data } = yield call(loadTodosAPI);
   try {
-    yield delay(1000);
     yield put({
       type: LOAD_TODOS_SUCCESS,
       data,
@@ -68,7 +67,6 @@ export function* addTodo(action: AnyAction) {
   const { data } = yield call(addTodoAPI, action.data);
   const toastData = { showToast: true, title: '등록성공', desc: '등록 완료 되었습니다' };
   try {
-    yield delay(1000);
     yield put({
       type: ADD_TODO_SUCCESS,
       data,
@@ -100,7 +98,6 @@ export function* removeTodo(action: AnyAction) {
   const { data } = yield call(removeTodoAPI, action.data);
   const toastData = { showToast: true, title: '', desc: '삭제가 완료 되었습니다' };
   try {
-    yield delay(1000);
     yield put({
       type: REMOVE_TODO_SUCCESS,
       data,
